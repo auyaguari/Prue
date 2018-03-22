@@ -29,7 +29,8 @@
         </activity>
         <activity
             android:name=".diseno.Login"
-            android:label="@string/titulo_Login">
+            android:label="@string/titulo_Login"
+            android:theme="@style/Theme.AppCompat">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -37,7 +38,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".diseno.Registro"
-            android:label="@string/registrarTitulo"/>
+            android:label="@string/registrarTitulo"
+            android:theme="@style/Theme.AppCompat"/>
         <activity android:name=".diseno.ListaMediciones" />
     </application>
 
