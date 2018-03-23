@@ -1,5 +1,6 @@
 package velo.uned.velocimetro.datos;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -21,7 +22,9 @@ public class Conexion extends SQLiteOpenHelper {
 
 
     public Conexion(Context context) {
+
         super(context, Nombre_Base, null, version);
+
     }
 
     @Override
@@ -48,23 +51,18 @@ public class Conexion extends SQLiteOpenHelper {
                     + User.campo_nombre + " TEXT, "
                     + User.campo_apellido + " TEXT, "
                     + User.campo_rol + " TEXT )";
-            String crear_usuario_administrador="INSERT INTO" +User.tabla+ "("
-                    + User.campo_id +","
-                    + User.campo_usuario + ","
-                    + User.campo_contraseña + ")"
-                    + " VALUES ( "
-                    + "1 ,"
-                    + "'Administrador', "
-                    + des.encrypt("password").toString() +","
-                    + "'Alvaro', "
-                    + "'Uyaguari' ,"
-                    + "'admin'"
-                    +")";
-
             db.execSQL(crear_tabla_persona);
             db.execSQL(crear_tabla_ruta);
             db.execSQL(crear_tabla_users);
-            db.execSQL(crear_usuario_administrador);
+
+            String pass=des.encrypt("admin");
+            ContentValues values = new ContentValues();
+            values.put(User.campo_nombre,"Alvaro");
+            values.put(User.campo_apellido,"Ayaguary");
+            values.put(User.campo_rol,"Admin");
+            values.put(User.campo_usuario, "admin");
+            values.put(User.campo_contraseña, pass);
+            db.insert(User.tabla, null, values);
 
         }catch (Exception ex){
             Log.d(this.getClass().toString(), ex.getMessage());
