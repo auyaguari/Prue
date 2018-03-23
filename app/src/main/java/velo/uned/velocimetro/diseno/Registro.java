@@ -6,18 +6,18 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 import velo.uned.velocimetro.databinding.ActivityRegistroBinding;
-import velo.uned.velocimetro.modelo.Users;
+import velo.uned.velocimetro.modelo.User;
 import velo.uned.velocimetro.servicios.UsersServicio;
 import velo.uned.velocimetro.R;
 
 public class Registro extends AppCompatActivity {
-    Users users;
+    User users;
     UsersServicio usersServicio;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ActivityRegistroBinding binding= DataBindingUtil.setContentView(this,R.layout.activity_registro);
-        users=new Users();
+        users=new User();
         usersServicio=new UsersServicio(this );
         binding.setDbuser(users);
     }

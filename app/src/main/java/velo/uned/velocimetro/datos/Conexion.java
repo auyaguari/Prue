@@ -6,7 +6,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import velo.uned.velocimetro.modelo.Medicion;
 import velo.uned.velocimetro.modelo.Ruta;
-import velo.uned.velocimetro.modelo.Users;
+import velo.uned.velocimetro.modelo.User;
+
 
 /**
  * Created by alexa on 13/03/2018.
@@ -34,10 +35,10 @@ public class Conexion extends SQLiteOpenHelper {
                 + Ruta.campo_latitud + " DOUBLE, "
                 + Ruta.campo_longitud + " DOUBLE, "
                 + Ruta.campo_id_medicion + " INTEGER )";
-        String crear_tabla_users = "CREATE TABLE " + Users.tabla  + "("
-                + Users.campo_id  + " INTEGER PRIMARY KEY AUTOINCREMENT ,"
-                + Users.campo_usuario + " TEXT, "
-                + Users.campo_contraseña + " TEXT )";
+        String crear_tabla_users = "CREATE TABLE " + User.tabla  + "("
+                + User.campo_id  + " INTEGER PRIMARY KEY AUTOINCREMENT ,"
+                + User.campo_usuario + " TEXT, "
+                + User.campo_contraseña + " TEXT )";
         db.execSQL(crear_tabla_persona);
         db.execSQL(crear_tabla_ruta);
         db.execSQL(crear_tabla_users);

@@ -8,7 +8,8 @@ import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
 
 import velo.uned.velocimetro.datos.Conexion;
-import velo.uned.velocimetro.modelo.Users;
+import velo.uned.velocimetro.modelo.User;
+//import velo.uned.velocimetro.modelo.Users;
 
 /**
  * Created by alexa on 20/03/2018.
@@ -17,14 +18,14 @@ import velo.uned.velocimetro.modelo.Users;
 public class UsersDAO {
     Context context;
     Conexion dbsqLite;
-    public static ArrayList<Users> listaUsers;
+    public static ArrayList<User> listaUsers;
 
     public UsersDAO(Context context) {
         this.context = context;
         dbsqLite = new Conexion(context);
     }
 
-    public boolean insertar(Users user) {
+    public boolean insertar(User user) {
         SQLiteDatabase db = dbsqLite.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(user.campo_usuario, user.getUser());
@@ -36,7 +37,7 @@ public class UsersDAO {
         }
         return id > 0;
     }
-    public boolean alterar(Users user) {
+    public boolean alterar(User user) {
         SQLiteDatabase db = dbsqLite.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(user.campo_usuario, user.getUser());
@@ -49,14 +50,14 @@ public class UsersDAO {
     }
 
 
-    public boolean borrar(Users user ) {
+    public boolean borrar(User user ) {
         SQLiteDatabase db = dbsqLite.getWritableDatabase();
         String where = user.campo_id + " = ?";
         int ret = db.delete(user.tabla, where, new String[]{String.valueOf(user.getId())});
         db.close();
         return ret > 0;
     }
-    public Boolean getUser(Users user){
+    public Boolean getUser(User user){
         SQLiteDatabase db =dbsqLite.getReadableDatabase();
         String [] campos={user.campo_usuario,user.campo_contraseña};
         String [] parametro={user.getUser().toString(),user.getPass().toString()};
@@ -64,9 +65,9 @@ public class UsersDAO {
         Cursor cursor = db.query(user.tabla,campos,where,parametro,null,null,null);
         return cursor!=null;
     }
-    public  boolean getUserO(Users users){
+    public  boolean getUserO(User users){
         SQLiteDatabase db = dbsqLite.getReadableDatabase();
-        Users nuUser=new Users();
+        User nuUser=new User();
         String selectQuery = "SELECT  " +
                 users.campo_id + "," +
                 users.campo_usuario + "," +

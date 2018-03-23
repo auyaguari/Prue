@@ -4,7 +4,7 @@
         <import type="android.view.View"/>
         <variable
             name="dbuser"
-            type="velo.uned.velocimetro.modelo.Users" />
+            type="velo.uned.velocimetro.modelo.User" />
     </data>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
