@@ -3,8 +3,8 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 import velo.uned.velocimetro.databinding.ActivityLoginBinding;
 import velo.uned.velocimetro.main.ActividadPrincipal;
@@ -12,6 +12,7 @@ import velo.uned.velocimetro.modelo.User;
 
 import velo.uned.velocimetro.servicios.UsersServicio;
 import velo.uned.velocimetro.R;
+import velo.uned.velocimetro.util.TripleDES;
 
 public class Login extends AppCompatActivity {
     User user;
@@ -39,12 +40,19 @@ public class Login extends AppCompatActivity {
     }
 //Ingresar Al sistema
     public void ingresar(View view) {
-        if (usersServicio.getUser(user)){
-                Toast.makeText(this, "Bienvenido!", Toast.LENGTH_SHORT).show();
-                Intent intentIng = new Intent(Login.this, ActividadPrincipal.class);
-                Login.this.startActivity(intentIng);
-        } else {
+        TripleDES des = new TripleDES();
+        try {
+            if (usersServicio.getUser(user.getUser(), des.decrypt(user.getPass()).toString())){
+                    Toast.makeText(this, "Bienvenido!", Toast.LENGTH_SHORT).show();
+                    Intent intentIng = new Intent(Login.this, ActividadPrincipal.class);
+                    Login.this.startActivity(intentIng);
+            } else {
+                Toast.makeText(this, "Logeo Incorrecto!", Toast.LENGTH_SHORT).show();
+            }
+        } catch (Exception e) {
+            Log.d(this.getClass().toString(), e.getMessage());
             Toast.makeText(this, "Logeo Incorrecto!", Toast.LENGTH_SHORT).show();
         }
+
     }
 }

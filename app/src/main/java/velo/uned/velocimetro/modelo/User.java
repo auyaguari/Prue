@@ -13,13 +13,23 @@ import velo.uned.velocimetro.BR;
 
 public class User extends BaseObservable  {
     public static final String tabla="usuarios";
-    public static final String campo_id="id_rut";
-    public static final String campo_contraseña="latitud_rut";
-    public static final String campo_usuario="longitud_rut";
+    public static final String campo_id="id";
+    public static final String campo_contraseña="user";
+    public static final String campo_usuario="password";
+    public static final String campo_nombre="name";
+    public static final String campo_apellido="last_name";
+    public static final String campo_rol="rol";
 
     private Long id;
     private String user;
     private String pass;
+    private String nombre;
+    private String apellido;
+
+    //admin = Administrador
+    //user = Usuario
+    private String rol;
+
     public User() {
 
 
@@ -30,7 +40,9 @@ public class User extends BaseObservable  {
     }
 
     public void setId(Long id) {
+
         this.id = id;
+        notifyPropertyChanged(BR.id);
     }
     @Bindable
     public String getUser() {
@@ -38,7 +50,9 @@ public class User extends BaseObservable  {
     }
 
     public void setUser(String user) {
+
         this.user = user;
+        notifyPropertyChanged(BR.user);
     }
     @Bindable
     public String getPass() {
@@ -46,9 +60,40 @@ public class User extends BaseObservable  {
     }
 
     public void setPass(String pass) {
+
         this.pass = pass;
+        notifyPropertyChanged(BR.pass);
     }
 
+    @Bindable
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+        notifyPropertyChanged(BR.nombre);
+    }
+
+    @Bindable
+    public String getApellido() {
+        return apellido;
+    }
+
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+        notifyPropertyChanged(BR.apellido);
+    }
+
+    @Bindable
+    public String getRol() {
+        return rol;
+    }
+
+    public void setRol(String rol) {
+        this.rol = rol;
+        notifyPropertyChanged(BR.rol);
+    }
 
 }
 

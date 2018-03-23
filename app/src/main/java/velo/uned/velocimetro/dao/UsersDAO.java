@@ -65,6 +65,14 @@ public class UsersDAO {
         Cursor cursor = db.query(user.tabla,campos,where,parametro,null,null,null);
         return cursor!=null;
     }
+    public Boolean getUser(final String user, final String password){
+        SQLiteDatabase db =dbsqLite.getReadableDatabase();
+        String [] campos={User.campo_usuario,User.campo_contraseña};
+        String [] parametro={user,password};
+        String where = User.campo_usuario + " = ?"+" AND "+User.campo_contraseña+" = ?";
+        Cursor cursor = db.query(User.tabla,campos,where,parametro,null,null,null);
+        return cursor!=null;
+    }
     public  boolean getUserO(User users){
         SQLiteDatabase db = dbsqLite.getReadableDatabase();
         User nuUser=new User();

@@ -35,6 +35,9 @@ public class UsersServicio {
     public boolean getUser(User users) {
         return usersDAO.getUser(users);
     }
+    public boolean getUser(final String user, final String password) {
+        return usersDAO.getUser(user, password);
+    }
     public boolean getUserO(User users) {
         return usersDAO.getUserO(users);
     }
