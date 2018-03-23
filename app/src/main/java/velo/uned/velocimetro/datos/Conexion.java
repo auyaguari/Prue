@@ -17,7 +17,7 @@ import velo.uned.velocimetro.util.TripleDES;
 
 public class Conexion extends SQLiteOpenHelper {
     private static final String Nombre_Base = "base.bd";
-    private static final int version =2;
+    private static final int version =1;
 
 
     public Conexion(Context context) {
