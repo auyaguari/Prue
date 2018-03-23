@@ -41,7 +41,6 @@ public class Login extends AppCompatActivity {
 //Ingresar Al sistema
     public void ingresar(View view) throws Exception {
         TripleDES des = new TripleDES();
-        usersServicio.listar();
         String dess=null;
         try {
             dess=des.encrypt(user.getPass());

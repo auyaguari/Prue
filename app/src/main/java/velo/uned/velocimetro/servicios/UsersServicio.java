@@ -45,6 +45,7 @@ public class UsersServicio {
         }
         return des;
     }
-    public void listar(){
-        usersDAO.listar();
-    }}
+   // public void listar(){
+    //    usersDAO.listar();
+    //}
+}
