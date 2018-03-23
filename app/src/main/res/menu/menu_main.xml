@@ -3,5 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools" tools:context=".main.ActividadPrincipal">
     <item android:id="@+id/action_settings" android:title="@string/settings"
         app:showAsAction="never" />
+    <item android:id="@+id/actio_registro" android:title="Añadir Usuarios"
+        app:showAsAction="never"/>
 
 </menu>

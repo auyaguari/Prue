@@ -4,11 +4,14 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import java.util.ArrayList;
 
 import velo.uned.velocimetro.datos.Conexion;
+import velo.uned.velocimetro.modelo.Medicion;
 import velo.uned.velocimetro.modelo.User;
+import velo.uned.velocimetro.util.TripleDES;
 //import velo.uned.velocimetro.modelo.Users;
 
 /**
@@ -18,23 +21,26 @@ import velo.uned.velocimetro.modelo.User;
 public class UsersDAO {
     Context context;
     Conexion dbsqLite;
+    TripleDES des;
     public static ArrayList<User> listaUsers;
 
     public UsersDAO(Context context) {
         this.context = context;
         dbsqLite = new Conexion(context);
+        des=new TripleDES();
+        listar();
     }
 
     public boolean insertar(User user) {
         SQLiteDatabase db = dbsqLite.getWritableDatabase();
         ContentValues values = new ContentValues();
+        values.put(user.campo_nombre,user.getNombre());
+        values.put(user.campo_apellido,user.getApellido());
+        values.put(user.campo_rol,user.getRol());
         values.put(user.campo_usuario, user.getUser());
         values.put(user.campo_contraseña, user.getPass());
-        Long id = db.insert(user.tabla, null, values);
+        Long id = db.insert(User.tabla, null, values);
         db.close();
-        if (id > 0) {
-            user.setId(id);
-        }
         return id > 0;
     }
     public boolean alterar(User user) {
@@ -65,29 +71,52 @@ public class UsersDAO {
         Cursor cursor = db.query(user.tabla,campos,where,parametro,null,null,null);
         return cursor!=null;
     }
-    public Boolean getUser(final String user, final String password){
+    public Boolean getUser(final String user, final String password) throws Exception {
         SQLiteDatabase db =dbsqLite.getReadableDatabase();
-        String [] campos={User.campo_usuario,User.campo_contraseña};
-        String [] parametro={user,password};
-        String where = User.campo_usuario + " = ?"+" AND "+User.campo_contraseña+" = ?";
-        Cursor cursor = db.query(User.tabla,campos,where,parametro,null,null,null);
-        return cursor!=null;
+        boolean dess=false;
+        try {
+            String [] campos={User.campo_usuario,User.campo_contraseña};
+            String [] parametro={user};
+            String where = User.campo_usuario + "=?";
+            Cursor cursor = db.query(User.tabla,campos,where,parametro,null,null,null);
+            cursor.moveToFirst();
+            if (des.decrypt(cursor.getString(1)).equals(des.decrypt(password)))
+                dess= true;
+        }catch (Exception e){
+
+        }
+            return dess;
     }
-    public  boolean getUserO(User users){
+    public void listar() {
         SQLiteDatabase db = dbsqLite.getReadableDatabase();
-        User nuUser=new User();
+        ArrayList<User> listuser = new ArrayList<>();
+
         String selectQuery = "SELECT  " +
-                users.campo_id + "," +
-                users.campo_usuario + "," +
-                users.campo_contraseña +
-                " FROM " + users.tabla +
-                " WHERE " + users.campo_usuario +
-                "='" + users.getUser() +
-                "' AND " + users.campo_contraseña +
-                "='" + users.getPass();
+                User.campo_id + "," +
+                User.campo_nombre + "," +
+                User.campo_apellido + "," +
+                User.campo_rol + "," +
+                User.campo_usuario + "," +
+                User.campo_contraseña +
+                " FROM " + User.tabla;
 
         Cursor cursor = db.rawQuery(selectQuery, null);
-        db.close();
-        return cursor.moveToFirst();
+        User nuUser;
+
+        if (cursor.moveToFirst()) {
+            do {
+                nuUser = new User();
+                nuUser.setId(cursor.getLong(0));
+                nuUser.setNombre(cursor.getString(1));
+                nuUser.setApellido(cursor.getString(2));
+                nuUser.setRol(cursor.getString(3));
+                nuUser.setUser(cursor.getString(4));
+                nuUser.setPass(cursor.getString(5));
+                listuser.add(nuUser);
+                Log.v("FUnciona",nuUser.getId()+nuUser.getApellido()+nuUser.getNombre()+nuUser.getRol()+nuUser.getUser()+nuUser.getPass());
+
+            } while (cursor.moveToNext());
+            db.close();
+        }
     }
 }

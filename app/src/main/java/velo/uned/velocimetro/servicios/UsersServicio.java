@@ -1,6 +1,7 @@
 package velo.uned.velocimetro.servicios;
 
 import android.content.Context;
+import android.util.Log;
 
 import velo.uned.velocimetro.dao.UsersDAO;
 import velo.uned.velocimetro.modelo.User;
@@ -17,9 +18,9 @@ public class UsersServicio {
         usersDAO = new UsersDAO(context);
     }
 
-    public boolean addUser(User users) {
+    public boolean addUser(User user) {
 
-        return usersDAO.insertar(users);
+        return usersDAO.insertar(user);
     }
 
     public boolean updateUser(User users) {
@@ -32,13 +33,18 @@ public class UsersServicio {
         return usersDAO.borrar(users);
     }
 
-    public boolean getUser(User users) {
-        return usersDAO.getUser(users);
+   // public boolean getUser(User users) {
+      //  return usersDAO.getUser(users);
+    //}
+    public boolean getUser(final String user, final String password) throws Exception {
+        boolean des=false;
+        try {
+            des= usersDAO.getUser(user, password);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return des;
     }
-    public boolean getUser(final String user, final String password) {
-        return usersDAO.getUser(user, password);
-    }
-    public boolean getUserO(User users) {
-        return usersDAO.getUserO(users);
-    }
-}
+    public void listar(){
+        usersDAO.listar();
+    }}

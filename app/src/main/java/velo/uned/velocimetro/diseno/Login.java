@@ -39,10 +39,17 @@ public class Login extends AppCompatActivity {
         //});
     }
 //Ingresar Al sistema
-    public void ingresar(View view) {
+    public void ingresar(View view) throws Exception {
         TripleDES des = new TripleDES();
+        usersServicio.listar();
+        String dess=null;
         try {
-            if (usersServicio.getUser(user.getUser(), des.decrypt(user.getPass()).toString())){
+            dess=des.encrypt(user.getPass());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            if (usersServicio.getUser(user.getUser(), dess)){
                     Toast.makeText(this, "Bienvenido!", Toast.LENGTH_SHORT).show();
                     Intent intentIng = new Intent(Login.this, ActividadPrincipal.class);
                     Login.this.startActivity(intentIng);
@@ -54,5 +61,9 @@ public class Login extends AppCompatActivity {
             Toast.makeText(this, "Logeo Incorrecto!", Toast.LENGTH_SHORT).show();
         }
 
+    }
+    public void registrarl(View view) {
+        Intent intentIng = new Intent(Login.this, Registro.class);
+        Login.this.startActivity(intentIng);
     }
 }

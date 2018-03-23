@@ -23,19 +23,33 @@
         android:layout_gravity="center"
         android:textSize="20dp"/>
     <EditText
+        android:id="@+id/txtNombre"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="nombre"
+        android:inputType="text"
+        android:text="@={dbuser.nombre}"/>
+    <EditText
+        android:id="@+id/txtapellido"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="apellido"
+        android:inputType="text"
+        android:text="@={dbuser.apellido}"/>
+    <EditText
         android:id="@+id/txtUsuarioReg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/usuario"
         android:inputType="text"
-        android:text="@{dbuser.user}"/>
+        android:text="@={dbuser.user}"/>
     <EditText
         android:id="@+id/txtPassReg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/contra"
         android:inputType="text"
-        android:text="@{dbuser.pass}"/>
+        android:text="@={dbuser.pass}"/>
     <Button
         android:id="@+id/btnRegistarReg"
         android:layout_width="wrap_content"
