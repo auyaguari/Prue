@@ -83,10 +83,10 @@ public class GpsServices extends Service implements LocationListener, GpsStatus.
         if (data.isEnEjecucion()){
             currentLat = location.getLatitude();
             currentLon = location.getLongitude();
-            ruta.setLongitud(currentLon);
+            /*ruta.setLongitud(currentLon);
             ruta.setLatitud(currentLat);
             rutalist.add(ruta);
-            ruta=new Ruta();
+            ruta=new Ruta();*/
             if (data.isFirstTime()){
                 lastLat = currentLat;
                 lastLon = currentLon;
@@ -128,7 +128,7 @@ public class GpsServices extends Service implements LocationListener, GpsStatus.
                 }
             }
             //data.update();
-            data.setRutalist(rutalist);
+            //data.setRutalist(rutalist);
             updateNotification(true);
         }
     }

@@ -268,10 +268,11 @@ public class ActividadPrincipal extends  AppCompatActivity  implements LocationL
     }
     //Detener una medición
     public void detenerMedicion(View view){
+        Log.v("pruebaData",String.valueOf(data.getDistancia())+String.valueOf(data.getVelocidadMaxima())+String.valueOf(data.getFechaInicio()+String.valueOf(data.getFechafin())));
         if (medicionServicio.addMedicion(data)) {
-            if(rutaServicios.addAllRuta(data.getRutalist(),data.getId())) {
+            //if(rutaServicios.addAllRuta(data.getRutalist(),data.getId())) {
                 Toast.makeText(this, "Guardado Correctamente!", Toast.LENGTH_SHORT).show();
-            }
+           // }
         } else {
             Toast.makeText(this, "Ocurrio Un error al guardar!", Toast.LENGTH_SHORT).show();
         }
