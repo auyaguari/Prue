@@ -51,7 +51,7 @@ public class Login extends AppCompatActivity {
         //});
     }
 //Ingresar Al sistema
-    public void ingresar(View view) throws Exception {
+    public void ingresar(View view)  {
         TripleDES des = new TripleDES();
         String dess=null;
         try {
