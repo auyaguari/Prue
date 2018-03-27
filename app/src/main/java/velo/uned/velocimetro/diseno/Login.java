@@ -59,7 +59,7 @@ public class Login extends AppCompatActivity {
         //});
     }
 //Ingresar Al sistema y validacion de datos
-    public void ingresar(View view) throws Exception {
+    public void ingresar(View view){
         if(validar()){
             if (val.validarCaracteresEspeciales(user.getUser())){
                 if (val.validarPassword(user.getPass())){
