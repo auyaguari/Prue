@@ -9,7 +9,7 @@ import velo.uned.velocimetro.BR;
  * Created by Alvaro on 8/2/2018.
  */
 
-public class RangoVelocidad extends BaseObservable {
+class RangoVelocidad extends BaseObservable {
     private int codigo;
     private double velocidadMinima;
     private double velocidadMaxima;

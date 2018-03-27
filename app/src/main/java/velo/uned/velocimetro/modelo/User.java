@@ -11,7 +11,7 @@ import velo.uned.velocimetro.BR;
  * Created by alexa on 20/03/2018.
  */
 
-public class User extends BaseObservable  {
+class User extends BaseObservable  {
     public static final String tabla="usuarios";
     public static final String campo_id="id";
     public static final String campo_contraseña="user";

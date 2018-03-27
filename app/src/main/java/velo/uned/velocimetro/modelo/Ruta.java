@@ -4,7 +4,7 @@ package velo.uned.velocimetro.modelo;
  * Created by alexa on 19/03/2018.
  */
 
-public class Ruta {
+class Ruta {
     public static final String tabla="ruta";
     public static final String campo_id="id_rut";
     public static final String campo_latitud="latitud_rut";
