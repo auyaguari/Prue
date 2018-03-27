@@ -17,7 +17,7 @@ import java.util.List;
 
 import velo.uned.velocimetro.BR;
 
-class Medicion extends BaseObservable implements Parcelable {
+public class Medicion extends BaseObservable implements Parcelable {
     public static final String tabla="medicion";
     public static final String campo_id="id_med";
     public static final String campo_fecha_Inicio="fechaInicio_med";
