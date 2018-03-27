@@ -3,6 +3,7 @@ package velo.uned.velocimetro.datos;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
@@ -28,7 +29,7 @@ public class Conexion extends SQLiteOpenHelper {
     }
 
     @Override
-    public void onCreate(SQLiteDatabase db) {
+    public void onCreate(SQLiteDatabase db) throws SQLiteException {
 
         TripleDES des = new TripleDES();
         try {
@@ -64,10 +65,10 @@ public class Conexion extends SQLiteOpenHelper {
             values.put(User.campo_contraseña, pass);
             db.insert(User.tabla, null, values);
 
-        }catch (Exception ex){
+        }catch (Exception ex) {
             Log.d(this.getClass().toString(), ex.getMessage());
         }
-}
+        }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int i, int i1) {

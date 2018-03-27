@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -30,16 +31,28 @@ public class UsersDAO {
         des=new TripleDES();
     }
 
-    public boolean insertar(User user) {
-        SQLiteDatabase db = dbsqLite.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put(user.campo_nombre,user.getNombre());
-        values.put(user.campo_apellido,user.getApellido());
-        values.put(user.campo_rol,user.getRol());
-        values.put(user.campo_usuario, user.getUser());
-        values.put(user.campo_contraseña, user.getPass());
-        Long id = db.insert(User.tabla, null, values);
-        db.close();
+    public boolean insertar(User user) throws SQLiteException{
+        Long id = null;
+        SQLiteDatabase db = null;
+        try {
+            db = dbsqLite.getWritableDatabase();
+            ContentValues values = new ContentValues();
+            values.put(user.campo_nombre, user.getNombre());
+            values.put(user.campo_apellido, user.getApellido());
+            values.put(user.campo_rol, user.getRol());
+            values.put(user.campo_usuario, user.getUser());
+            values.put(user.campo_contraseña, user.getPass());
+            id = db.insert(User.tabla, null, values);
+        }catch (SQLiteException ex){
+            throw ex;
+
+        }finally{
+            db.close();
+        }
+
+
+
+
         return id > 0;
     }
     public boolean alterar(User user) {
@@ -55,11 +68,19 @@ public class UsersDAO {
     }
 
 
-    public boolean borrar(User user ) {
-        SQLiteDatabase db = dbsqLite.getWritableDatabase();
+    public boolean borrar(User user ) throws SQLiteException{
+        SQLiteDatabase db = null;
+        int ret = 0;
+        try {
+        db = dbsqLite.getWritableDatabase();
         String where = user.campo_id + " = ?";
-        int ret = db.delete(user.tabla, where, new String[]{String.valueOf(user.getId())});
+        ret = db.delete(user.tabla, where, new String[]{String.valueOf(user.getId())});
+    }catch (SQLiteException ex) {
+        throw ex;
+    }finally {
         db.close();
+
+    }
         return ret > 0;
     }
     public Boolean getUser(User user){
@@ -70,7 +91,7 @@ public class UsersDAO {
         Cursor cursor = db.query(user.tabla,campos,where,parametro,null,null,null);
         return cursor!=null;
     }
-    public Boolean getUser(final String user, final String password) throws Exception {
+    public Boolean getUser(final String user, final String password) throws SQLiteException {
         SQLiteDatabase db =dbsqLite.getReadableDatabase();
         boolean dess=false;
         try {
@@ -82,7 +103,8 @@ public class UsersDAO {
             if (des.decrypt(cursor.getString(1)).equals(des.decrypt(password)))
                 dess= true;
         }catch (Exception e){
-
+            Log.d(this.getClass().toString(), e.getMessage());
+            throw new SQLiteException("Error en la ecriptación" + e.getMessage());
         }
             return dess;
     }
