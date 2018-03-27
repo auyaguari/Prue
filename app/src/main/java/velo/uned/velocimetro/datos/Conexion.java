@@ -56,7 +56,7 @@ public class Conexion extends SQLiteOpenHelper {
             db.execSQL(crear_tabla_ruta);
             db.execSQL(crear_tabla_users);
 
-            String pass=des.encrypt("admin");
+            String pass=des.encrypt("admins1234");
             ContentValues values = new ContentValues();
             values.put(User.campo_nombre,"Alvaro");
             values.put(User.campo_apellido,"Ayaguary");

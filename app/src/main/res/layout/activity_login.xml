@@ -41,14 +41,6 @@
         android:text="@string/iniciar"
         android:onClick="ingresar"
         android:layout_gravity="center"/>
-    <Button
-        android:id="@+id/btnregistrar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/registrar"
-        android:onClick="registrarl"
-        android:layout_gravity="center"/>
-
 
 </LinearLayout>
 </layout>

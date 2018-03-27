@@ -126,5 +126,9 @@
     <string name="registrarTitulo">Registro Usuario</string>
     <string name="titulo_Login">Logeo</string>
 
+    <string name="errorCampoObligatorio">Campo Obligatorio</string>
+    <string name="errorcampo">Campo Incorrrecto</string>
+    <string name="errorpassword">La Contraseña debe Tener minimo 6 caracteres y 4 numeros</string>
+    <string name="errorCaracter">Usuario tiene Caracteres no Adminitidos</string>
 </resources>
 

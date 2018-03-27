@@ -33,6 +33,7 @@ import java.util.List;
 import velo.uned.velocimetro.SettingsActivity;
 import velo.uned.velocimetro.controladores.GpsServices;
 import velo.uned.velocimetro.databinding.ActivityActividadPrincipalBinding;
+import velo.uned.velocimetro.diseno.Registro;
 import velo.uned.velocimetro.modelo.Medicion;
 import velo.uned.velocimetro.modelo.RangoVelocidad;
 import velo.uned.velocimetro.servicios.MedicionServicio;
@@ -45,9 +46,6 @@ public class ActividadPrincipal extends  AppCompatActivity  implements LocationL
     private String accuracy;
     private boolean firstfix;
     //private String status;
-
-
-
     private SharedPreferences sharedPreferences;
     //private Medicion.onGpsServiceUpdate onGpsServiceUpdate;
     private static Medicion data;
@@ -66,7 +64,8 @@ public class ActividadPrincipal extends  AppCompatActivity  implements LocationL
             case R.id.action_settings:
                 mostrarSettings();
                 return true;
-
+            case R.id.actio_registro:
+                mostrarRegistro();
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -77,16 +76,16 @@ public class ActividadPrincipal extends  AppCompatActivity  implements LocationL
         Intent intentSettings =new Intent(this,SettingsActivity.class);
         startActivity(intentSettings);
     }
+    private void mostrarRegistro(){
+        Intent intentSettings =new Intent(this,Registro.class);
+        startActivity(intentSettings);
+    }
 
     //Crea el menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-
-
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return  true;
-
-
     }
 
     //Crea la actividad principal
@@ -101,18 +100,10 @@ public class ActividadPrincipal extends  AppCompatActivity  implements LocationL
         //Toolbar toolBar = (Toolbar)findViewById(R.id.toolBar);
         //setSupportActionBar(toolBar);
 
-
-
-
         data = new Medicion();
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
-
-
-
         ///Overiide update
-
-
 
         mLocationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
 
@@ -154,7 +145,6 @@ public class ActividadPrincipal extends  AppCompatActivity  implements LocationL
 
             }
         });
-
         ActivityActividadPrincipalBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_actividad_principal);
         //med = new Medicion();
         binding.setDbMedicion(data);

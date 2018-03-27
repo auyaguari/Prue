@@ -31,7 +31,7 @@ public class UsersDAO {
         des=new TripleDES();
     }
 
-    public boolean insertar(User user) throws SQLiteException{
+    public boolean insertar(User user,String pass) throws SQLiteException{
         Long id = null;
         SQLiteDatabase db = null;
         try {
@@ -41,7 +41,7 @@ public class UsersDAO {
             values.put(user.campo_apellido, user.getApellido());
             values.put(user.campo_rol, user.getRol());
             values.put(user.campo_usuario, user.getUser());
-            values.put(user.campo_contraseña, user.getPass());
+            values.put(user.campo_contraseña,pass);
             id = db.insert(User.tabla, null, values);
         }catch (SQLiteException ex){
             throw ex;

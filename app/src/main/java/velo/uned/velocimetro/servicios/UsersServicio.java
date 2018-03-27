@@ -19,9 +19,9 @@ public class UsersServicio   {
         usersDAO = new UsersDAO(context);
     }
 
-    public boolean addUser(User user) throws SQLiteException{
+    public boolean addUser(User user,String pass) throws SQLiteException{
 
-        return usersDAO.insertar(user);
+        return usersDAO.insertar(user,pass);
     }
 
     public boolean updateUser(User users) throws SQLiteException{
