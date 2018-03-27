@@ -81,6 +81,8 @@ public class MedicionDAO {
 
         return medicion;
     }
+
+
     public ArrayList<Medicion> listar() {
         SQLiteDatabase db = dbsqLite.getReadableDatabase();
         listaMedicions = new ArrayList<>();
@@ -108,6 +110,24 @@ public class MedicionDAO {
             db.close();
         }
         return listaMedicions;
+    }
+
+    //Lista todas las mediciones y retorna un objeto de tipo Cursor
+    public Cursor listarCursor() {
+        SQLiteDatabase db = dbsqLite.getReadableDatabase();
+        listaMedicions = new ArrayList<>();
+
+        String selectQuery = "SELECT  " +
+                Medicion.campo_id + "," +
+                Medicion.campo_distancia + "," +
+                Medicion.campo_fecha_Inicio + "," +
+                Medicion.campo_fecha_Fin + "," +
+                Medicion.campo_velocidad +
+                " FROM " + Medicion.tabla;
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        return cursor;
     }
 
     public Medicion localizarMedicion(long id) {

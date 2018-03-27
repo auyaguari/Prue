@@ -42,6 +42,8 @@
             android:label="@string/registrarTitulo"
             android:theme="@style/Theme.AppCompat"/>
         <activity android:name=".diseno.ListaMediciones" />
+        <provider android:name=".provider.MedicionProvider"
+            android:authorities="velo.uned.velocimetro.provider"/>
     </application>
 
 </manifest>

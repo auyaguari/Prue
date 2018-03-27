@@ -1,6 +1,7 @@
 package velo.uned.velocimetro.servicios;
 
 import android.content.Context;
+import android.database.Cursor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,5 +42,10 @@ public class MedicionServicio {
     public ArrayList<Medicion> getallMedicion() {
         ArrayList<Medicion> medicionList = medicionDAO.listar();
         return medicionList;
+    }
+    //Lista todas las mediciones y retorna un objeto de tipo Cursor
+    public Cursor listarCursor() {
+        return medicionDAO.listarCursor();
+
     }
 }
