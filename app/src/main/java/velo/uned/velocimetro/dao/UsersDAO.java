@@ -28,7 +28,6 @@ public class UsersDAO {
         this.context = context;
         dbsqLite = new Conexion(context);
         des=new TripleDES();
-        listar();
     }
 
     public boolean insertar(User user) {
