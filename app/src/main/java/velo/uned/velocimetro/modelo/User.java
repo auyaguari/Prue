@@ -19,13 +19,16 @@ public class User extends BaseObservable  {
     public static final String campo_nombre="name";
     public static final String campo_apellido="last_name";
     public static final String campo_rol="rol";
+    public static final String campo_intentos="intento";
+    public static final String campo_estado="estado";
 
     private Long id;
     private String user;
     private String pass;
     private String nombre;
     private String apellido;
-
+    private Integer intento;
+    private String estado;
     //admin = Administrador
     //user = Usuario
     private String rol;
@@ -95,5 +98,24 @@ public class User extends BaseObservable  {
         notifyPropertyChanged(BR.rol);
     }
 
+    @Bindable
+    public Integer getIntento() {
+        return intento;
+    }
+
+    public void setIntento(Integer intento) {
+        this.intento = intento;
+        notifyPropertyChanged(BR.intento);
+    }
+
+    @Bindable
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+        notifyPropertyChanged(BR.estado);
+    }
 }
 

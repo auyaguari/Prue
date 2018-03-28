@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 import velo.uned.velocimetro.databinding.ActivityRegistroBinding;
@@ -19,11 +20,15 @@ import velo.uned.velocimetro.util.TripleDES;
 import velo.uned.velocimetro.util.Validacion;
 
 public class Registro extends AppCompatActivity {
+    String operacion;
+    int posicion;
+    Long id;
     User users;
     UsersServicio usersServicio;
     TripleDES des;
     Validacion val;
     EditText nom,ap,us,pas;
+    Button eliminar,actualizar,desbloquear;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,10 +37,31 @@ public class Registro extends AppCompatActivity {
         ap=findViewById(R.id.txtapellido);
         us=findViewById(R.id.txtUsuarioReg);
         pas=findViewById(R.id.txtPassReg);
+        operacion = getIntent().getStringExtra("operacion");
+        posicion = getIntent().getIntExtra("posicion", 0);
+        id = getIntent().getLongExtra("id",0);
+        eliminar=findViewById(R.id.btnEliminar);
+        actualizar=findViewById(R.id.btnRegistarReg);
+        desbloquear=findViewById(R.id.btnLiberar);
         users=new User();
         des=new TripleDES();
         val=new Validacion();
         usersServicio=new UsersServicio(this );
+        if (operacion.equals("alterar")){
+            eliminar.setVisibility(View.VISIBLE);
+            desbloquear.setVisibility(View.VISIBLE);
+            users.setId(id);
+            users=usersServicio.getUser(users);
+            try {
+                users.setPass(des.decrypt(users.getPass()));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            if (users.getUser().equals("admin")){
+                us.setEnabled(false);
+            }
+
+        }
         binding.setDbuser(users);
     }
 
@@ -53,8 +79,9 @@ public class Registro extends AppCompatActivity {
                             }
                             if (usersServicio.addUser(users, pass)) {
                                 Toast.makeText(this, "Guardado Correctamente!", Toast.LENGTH_SHORT).show();
-                                Intent intentIng = new Intent(Registro.this, Login.class);
+                                Intent intentIng = new Intent(Registro.this,ActividadPrincipal.class);
                                 Registro.this.startActivity(intentIng);
+                                finish();
                             } else {
                                 Toast.makeText(this, "Ocurrio Un error al guardar!", Toast.LENGTH_SHORT).show();
                             }
@@ -107,4 +134,10 @@ public class Registro extends AppCompatActivity {
             }
             return des;
         }
+//quitar el bloqueo del usuario
+    public void liberar(View view) {
     }
+
+    public void eliminar(View view) {
+    }
+}

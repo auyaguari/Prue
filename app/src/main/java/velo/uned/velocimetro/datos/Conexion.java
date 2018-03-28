@@ -51,7 +51,9 @@ public class Conexion extends SQLiteOpenHelper {
                     + User.campo_contraseña + " TEXT, "
                     + User.campo_nombre + " TEXT, "
                     + User.campo_apellido + " TEXT, "
-                    + User.campo_rol + " TEXT )";
+                    + User.campo_rol + " TEXT, "
+                    + User.campo_intentos + " INTEGER, "
+                    + User.campo_estado + " TEXT )";
             db.execSQL(crear_tabla_persona);
             db.execSQL(crear_tabla_ruta);
             db.execSQL(crear_tabla_users);
@@ -63,6 +65,8 @@ public class Conexion extends SQLiteOpenHelper {
             values.put(User.campo_rol,"Admin");
             values.put(User.campo_usuario, "admin");
             values.put(User.campo_contraseña, pass);
+            values.put(User.campo_intentos, 0);
+            values.put(User.campo_estado, "Activa");
             db.insert(User.tabla, null, values);
 
         }catch (Exception ex) {

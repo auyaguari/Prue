@@ -5,5 +5,7 @@
         app:showAsAction="never" />
     <item android:id="@+id/actio_registro" android:title="Añadir Usuarios"
         app:showAsAction="never"/>
+    <item android:id="@+id/action_listaUser" android:title="Usuarios"
+        app:showAsAction="never"/>
 
 </menu>

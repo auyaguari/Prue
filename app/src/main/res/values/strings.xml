@@ -122,7 +122,9 @@
     <string name="usuario">Usuario</string>
     <string name="contra">Contraseña</string>
     <string name="iniciar">Iniciar</string>
-    <string name="registrar">Registrar</string>
+    <string name="guardar">Guardar</string>
+    <string name="eliminar">Eliminar</string>
+    <string name="liberar">Liberar Bloqueo</string>
     <string name="registrarTitulo">Registro Usuario</string>
     <string name="titulo_Login">Logeo</string>
 

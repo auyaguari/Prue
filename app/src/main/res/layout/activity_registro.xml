@@ -54,10 +54,29 @@
         android:id="@+id/btnRegistarReg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/registrar"
+        android:text="@string/guardar"
         android:layout_gravity="center"
         android:onClick="registrar"
         />
+    <Button
+        android:id="@+id/btnEliminar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/eliminar"
+        android:layout_gravity="center"
+        android:onClick="eliminar"
+        android:visibility="invisible"
+        />
+    <Button
+        android:id="@+id/btnLiberar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/liberar"
+        android:layout_gravity="center"
+        android:onClick="liberar"
+        android:visibility="invisible"
+        />
+
 
 </LinearLayout>
 </layout>

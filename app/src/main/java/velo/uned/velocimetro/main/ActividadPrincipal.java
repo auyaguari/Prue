@@ -33,6 +33,7 @@ import java.util.List;
 import velo.uned.velocimetro.SettingsActivity;
 import velo.uned.velocimetro.controladores.GpsServices;
 import velo.uned.velocimetro.databinding.ActivityActividadPrincipalBinding;
+import velo.uned.velocimetro.diseno.ListaUser;
 import velo.uned.velocimetro.diseno.Registro;
 import velo.uned.velocimetro.modelo.Medicion;
 import velo.uned.velocimetro.modelo.RangoVelocidad;
@@ -56,6 +57,7 @@ public class ActividadPrincipal extends  AppCompatActivity  implements LocationL
     private Chronometer time;
     private LocationManager mLocationManager;
     private String satellite;
+    private String actor;
 
     //Crea el link a las preferencias
     @Override
@@ -65,7 +67,19 @@ public class ActividadPrincipal extends  AppCompatActivity  implements LocationL
                 mostrarSettings();
                 return true;
             case R.id.actio_registro:
-                mostrarRegistro();
+                if (actor.equals("admin")){
+                    mostrarRegistro();
+                }else
+                    Toast.makeText(this, "No Tiene Permisos!", Toast.LENGTH_SHORT).show();
+
+                return true;
+            case R.id.action_listaUser:
+                if (actor.equals("admin")){
+                    mostrarListaUser();
+                }else
+                    Toast.makeText(this, "No Tiene Permisos!", Toast.LENGTH_SHORT).show();
+
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -78,6 +92,11 @@ public class ActividadPrincipal extends  AppCompatActivity  implements LocationL
     }
     private void mostrarRegistro(){
         Intent intentSettings =new Intent(this,Registro.class);
+        intentSettings.putExtra("operacion", "nuevo");
+        startActivity(intentSettings);
+    }
+    private void mostrarListaUser(){
+        Intent intentSettings =new Intent(this,ListaUser.class);
         startActivity(intentSettings);
     }
 
@@ -93,6 +112,7 @@ public class ActividadPrincipal extends  AppCompatActivity  implements LocationL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_actividad_principal);
+        actor = getIntent().getStringExtra("actor");
         medicionServicio=new MedicionServicio(this);
         rutaServicios=new RutaServicios(this);
         //setContentView(R.layout.activity_actividad_principal);

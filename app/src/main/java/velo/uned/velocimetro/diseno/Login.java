@@ -71,12 +71,16 @@ public class Login extends AppCompatActivity {
                         e.printStackTrace();
                     }
                     try {
-                        if (usersServicio.getUser(user.getUser(), dess)){
-                            Toast.makeText(this, "Bienvenido!", Toast.LENGTH_SHORT).show();
-                            Intent intentIng = new Intent(Login.this, ActividadPrincipal.class);
-                            Login.this.startActivity(intentIng);
+                        if (usersServicio.validarLogin(user, dess)){
+                                usersServicio.updateNuevo(user);
+                                Toast.makeText(this, "Bienvenido!", Toast.LENGTH_SHORT).show();
+                                Intent intentIng = new Intent(Login.this, ActividadPrincipal.class);
+                                intentIng.putExtra("actor",user.getUser());
+                                Login.this.startActivity(intentIng);
                         } else {
+                            usersServicio.updateIntento(user);
                             Toast.makeText(this, "Logeo Incorrecto!", Toast.LENGTH_SHORT).show();
+
                         }
                     } catch (Exception e) {
                         Log.d(this.getClass().toString(), e.getMessage());
