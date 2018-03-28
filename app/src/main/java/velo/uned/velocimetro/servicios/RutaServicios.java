@@ -5,6 +5,7 @@ import android.content.Context;
 import java.util.ArrayList;
 
 import velo.uned.velocimetro.dao.RutaDAO;
+import velo.uned.velocimetro.modelo.Medicion;
 import velo.uned.velocimetro.modelo.Ruta;
 
 /**
@@ -13,6 +14,7 @@ import velo.uned.velocimetro.modelo.Ruta;
 
 public class RutaServicios {
     private RutaDAO rutaDAO;
+    public ArrayList<Ruta> rutalist;
     //  CONSTRUCTOR DE RUTASERVICIOS
     public RutaServicios(Context context) {
         rutaDAO = new RutaDAO(context);
@@ -23,7 +25,7 @@ public class RutaServicios {
         return  rutaDAO.insertar(ruta);
     }
     // FUNCION PARA GUARDAR UNA LISTA DE RUTAS EN LA BASE DE DATOS
-    public boolean addAllRuta(ArrayList<Ruta> rutalist,Long id) {
+    public boolean addAllRuta(ArrayList<Ruta> rutalist,Medicion id) {
 
         return  rutaDAO.insertar(rutalist,id);
     }
@@ -43,8 +45,7 @@ public class RutaServicios {
         return nuRuta;
     }
     // FUNCION PARA OBTENER TODAS LAS RUTAS DE LA BASE DE DATOS
-    public ArrayList<Ruta> getallMedicion() {
-        ArrayList<Ruta> rutalist = rutaDAO.listar();
-        return rutalist;
+    public void getallRutaId(long id) {
+        rutalist = rutaDAO.listar(id);
     }
 }

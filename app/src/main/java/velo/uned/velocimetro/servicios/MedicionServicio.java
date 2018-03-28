@@ -15,6 +15,7 @@ import velo.uned.velocimetro.modelo.Medicion;
 
 public class MedicionServicio {
     private MedicionDAO medicionDAO;
+    public ArrayList<Medicion> listMedicion;
     // CONSTRUCTOR DE MEDICIONSERVICIO
     public MedicionServicio(Context context) {
         medicionDAO = new MedicionDAO(context);
@@ -42,9 +43,8 @@ public class MedicionServicio {
         return nuMedicion;
     }
     // FUNCION PARA OBTENER TODAS LAS MEDICIONES DE LA BASE DE DATOS
-    public ArrayList<Medicion> getallMedicion() {
-        ArrayList<Medicion> medicionList = medicionDAO.listar();
-        return medicionList;
+    public void getallMedicion(long id) {
+        listMedicion = medicionDAO.listar(id);
     }
     //Lista todas las mediciones y retorna un objeto de tipo Cursor
     public Cursor listarCursor() {

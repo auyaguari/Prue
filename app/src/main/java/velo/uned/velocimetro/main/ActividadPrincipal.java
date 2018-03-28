@@ -33,7 +33,9 @@ import java.util.List;
 import velo.uned.velocimetro.SettingsActivity;
 import velo.uned.velocimetro.controladores.GpsServices;
 import velo.uned.velocimetro.databinding.ActivityActividadPrincipalBinding;
+import velo.uned.velocimetro.diseno.ListaMediciones;
 import velo.uned.velocimetro.diseno.ListaUser;
+import velo.uned.velocimetro.diseno.Login;
 import velo.uned.velocimetro.diseno.Registro;
 import velo.uned.velocimetro.modelo.Medicion;
 import velo.uned.velocimetro.modelo.RangoVelocidad;
@@ -57,7 +59,7 @@ public class ActividadPrincipal extends  AppCompatActivity  implements LocationL
     private Chronometer time;
     private LocationManager mLocationManager;
     private String satellite;
-    private String actor;
+    private Long id;
 
     //Crea el link a las preferencias
     @Override
@@ -67,36 +69,63 @@ public class ActividadPrincipal extends  AppCompatActivity  implements LocationL
                 mostrarSettings();
                 return true;
             case R.id.actio_registro:
-                if (actor.equals("admin")){
-                    mostrarRegistro();
+                if (id==1){
+                    mostrarRegistro(true);
                 }else
                     Toast.makeText(this, "No Tiene Permisos!", Toast.LENGTH_SHORT).show();
 
                 return true;
             case R.id.action_listaUser:
-                if (actor.equals("admin")){
+                if (id==1){
                     mostrarListaUser();
-                }else
-                    Toast.makeText(this, "No Tiene Permisos!", Toast.LENGTH_SHORT).show();
+                }else{
+                    mostrarRegistro(false);
+                }
 
+                return true;
+            case R.id.action_listaMedicion:
+                mostrarListaMedicion();
+                return true;
+            case R.id.action_salir:
+                regresarLogin();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+
     }
 
     //Crea las preferencias
+
     private void mostrarSettings(){
         Intent intentSettings =new Intent(this,SettingsActivity.class);
         startActivity(intentSettings);
     }
-    private void mostrarRegistro(){
+    //crea el registro
+    private void mostrarRegistro(boolean n){
         Intent intentSettings =new Intent(this,Registro.class);
-        intentSettings.putExtra("operacion", "nuevo");
+        if (n)
+            intentSettings.putExtra("operacion", "nuevo");
+        else{
+            intentSettings.putExtra("operacion", "alterar");
+            intentSettings.putExtra("id", data.getId_User());
+        }
         startActivity(intentSettings);
     }
+    //crea la lista User
     private void mostrarListaUser(){
         Intent intentSettings =new Intent(this,ListaUser.class);
+        startActivity(intentSettings);
+    }
+    //crea la lista Medicion
+    private void mostrarListaMedicion(){
+        Intent intentSettings =new Intent(this,ListaMediciones.class);
+        intentSettings.putExtra("id", data.getId_User());
+        startActivity(intentSettings);
+    }
+    //crea el login
+    private void regresarLogin(){
+        Intent intentSettings =new Intent(this,Login.class);
         startActivity(intentSettings);
     }
 
@@ -112,7 +141,7 @@ public class ActividadPrincipal extends  AppCompatActivity  implements LocationL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_actividad_principal);
-        actor = getIntent().getStringExtra("actor");
+        id = getIntent().getLongExtra("id",0);
         medicionServicio=new MedicionServicio(this);
         rutaServicios=new RutaServicios(this);
         //setContentView(R.layout.activity_actividad_principal);
@@ -121,6 +150,7 @@ public class ActividadPrincipal extends  AppCompatActivity  implements LocationL
         //setSupportActionBar(toolBar);
 
         data = new Medicion();
+        data.setId_User(id);
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
         ///Overiide update
@@ -185,7 +215,7 @@ public class ActividadPrincipal extends  AppCompatActivity  implements LocationL
         if (data == null){
             data = new Medicion();
         }else{
-            //data.setOnGpsServiceUpdate(onGpsServiceUpdate);
+            //data.setOnGpsServiceUpdate(oFnGpsServiceUpdate);
         }
 
         if (mLocationManager.getAllProviders().indexOf(LocationManager.GPS_PROVIDER) >= 0) {
@@ -278,9 +308,8 @@ public class ActividadPrincipal extends  AppCompatActivity  implements LocationL
     }
     //Detener una medición
     public void detenerMedicion(View view){
-        Log.v("pruebaData",String.valueOf(data.getDistancia())+String.valueOf(data.getVelocidadMaxima())+String.valueOf(data.getFechaInicio()+String.valueOf(data.getFechafin())));
         if (medicionServicio.addMedicion(data)) {
-            //if(rutaServicios.addAllRuta(data.getRutalist(),data.getId())) {
+            //if(rutaServicios.addAllRuta(data.getRutalist(),data)) {
                 Toast.makeText(this, "Guardado Correctamente!", Toast.LENGTH_SHORT).show();
            // }
         } else {

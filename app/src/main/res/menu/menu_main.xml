@@ -5,7 +5,11 @@
         app:showAsAction="never" />
     <item android:id="@+id/actio_registro" android:title="Añadir Usuarios"
         app:showAsAction="never"/>
-    <item android:id="@+id/action_listaUser" android:title="Usuarios"
+    <item android:id="@+id/action_listaUser" android:title="Modificar Usuario"
+        app:showAsAction="never"/>
+    <item android:id="@+id/action_listaMedicion" android:title="Ver Mediciones"
+        app:showAsAction="never"/>
+    <item android:id="@+id/action_salir" android:title="Salir"
         app:showAsAction="never"/>
 
 </menu>

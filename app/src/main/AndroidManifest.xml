@@ -12,7 +12,7 @@
         android:supportsRtl="true">
         <activity
             android:name=".main.ActividadPrincipal"
-            android:theme="@style/Theme.AppCompat"></activity>
+            android:theme="@style/Theme.AppCompat" />
 
         <service
             android:name=".controladores.GpsServices"
@@ -40,20 +40,20 @@
         </activity>
         <activity
             android:name=".diseno.Registro"
-            android:exported="false"
             android:label="@string/registrarTitulo"
             android:theme="@style/Theme.AppCompat" />
-        <activity android:name=".diseno.ListaMediciones" />
+        <activity android:name=".diseno.ListaMediciones"
+            android:theme="@style/Theme.AppCompat"/>
 
         <provider
             android:name=".provider.MedicionProvider"
-            android:authorities="velo.uned.velocimetro.provider"
-            android:exported="false" />
+            android:authorities="velo.uned.velocimetro.provider" />
 
-        <activity android:name=".diseno.ListaUser"
-            android:exported="false"
-            android:theme="@style/Theme.AppCompat"/>
-
+        <activity
+            android:name=".diseno.ListaUser"
+            android:theme="@style/Theme.AppCompat" />
+        <activity android:name=".diseno.ListaRuta"
+            android:theme="@style/Theme.AppCompat"></activity>
     </application>
 
 </manifest>

@@ -55,12 +55,13 @@ public class Registro extends AppCompatActivity {
             users=usersServicio.getUser(users);
             try {
                 users.setPass(des.decrypt(users.getPass()));
+                if (users.getUser().equals("admin")){
+                    us.setEnabled(false);
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            if (users.getUser().equals("admin")){
-                us.setEnabled(false);
-            }
+
 
         }
         binding.setDbuser(users);
@@ -78,14 +79,22 @@ public class Registro extends AppCompatActivity {
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
-                            if (usersServicio.addUser(users, pass)) {
-                                Toast.makeText(this, "Guardado Correctamente!", Toast.LENGTH_SHORT).show();
-                                Intent intentIng = new Intent(Registro.this,ActividadPrincipal.class);
-                                Registro.this.startActivity(intentIng);
-                                finish();
-                            } else {
-                                Toast.makeText(this, "Ocurrio Un error al guardar!", Toast.LENGTH_SHORT).show();
+                            if (operacion.equals("alterar")){
+                                if (usersServicio.update(users, pass)) {
+                                    Toast.makeText(this, "Guardado Correctamente!", Toast.LENGTH_SHORT).show();
+                                    finish();
+                                } else {
+                                    Toast.makeText(this, "Ocurrio Un error al guardar!", Toast.LENGTH_SHORT).show();
+                                }
+                            }else{
+                                if (usersServicio.addUser(users, pass)) {
+                                    Toast.makeText(this, "Guardado Correctamente!", Toast.LENGTH_SHORT).show();
+                                    finish();
+                                } else {
+                                    Toast.makeText(this, "Ocurrio Un error al guardar!", Toast.LENGTH_SHORT).show();
+                                }
                             }
+
                         } else {
                             pas.setError(getString(R.string.errorpassword));
                             pas.requestFocus();

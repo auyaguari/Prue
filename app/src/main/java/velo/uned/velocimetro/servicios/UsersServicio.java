@@ -25,12 +25,16 @@ public class UsersServicio   {
         usersDAO = new UsersDAO(context);
         des=new TripleDES();
         nuUser=new User();
-        listar();
     }
     // FUNCION PARA GUARDAR EL USER EN LA BASE DE DATOS
     public boolean addUser(User user,String pass) throws SQLiteException{
 
         return usersDAO.insertar(user,pass);
+    }
+    // FUNCION PARA MODIFICAR EL CAMPO INTENTO DE USER DE LA BASE DE DATOS
+    public boolean update(User users,String pass) throws SQLiteException{
+
+        return usersDAO.alterar(users,pass);
     }
     // FUNCION PARA MODIFICAR EL CAMPO INTENTO DE USER DE LA BASE DE DATOS
     public boolean updateIntento(User users) throws SQLiteException{
@@ -48,11 +52,8 @@ public class UsersServicio   {
     public boolean updateNuevo(User users) throws SQLiteException{
         boolean dec=false;
         if (!users.getUser().equals("admin")){
-            nuUser=usersDAO.getUser(users);
-            if (!nuUser.equals(null)){
                 nuUser.setIntento(0);
                 dec= usersDAO.alterarIntento(nuUser);
-            }
         }
         return dec;
     }
@@ -75,6 +76,7 @@ public class UsersServicio   {
                     dec=true;
                 }
             }
+            user.setId(nuUser.getId());
         }catch (Exception e){
             Log.d(this.getClass().toString(), e.getMessage());
             throw new SQLiteException("Error en la ecriptación" + e.getMessage());

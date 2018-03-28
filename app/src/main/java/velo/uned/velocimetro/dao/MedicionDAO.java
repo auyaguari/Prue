@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 import android.widget.Toast;
 
 import java.sql.Date;
@@ -24,7 +25,6 @@ public class MedicionDAO {
     public MedicionDAO(Context context) {
         this.context = context;
         dbsqLite = new Conexion(context);
-        listar();
     }
     //FUNCION PARA GUARDAR LA MEDICION EN LA BASE DE DATOS
     public boolean insertar(Medicion medicion) {
@@ -33,6 +33,8 @@ public class MedicionDAO {
         values.put(medicion.campo_distancia, medicion.getDistance());
         values.put(medicion.campo_fecha_Inicio, String.valueOf(medicion.getFechaInicio()));
         values.put(medicion.campo_fecha_Fin, medicion.getFechafin());
+        values.put(medicion.campo_velocidad, medicion.getVelocidadActual());
+        values.put(medicion.campo_id_user, medicion.getId_User());
         Long id = db.insert(medicion.tabla, null, values);
         db.close();
         if (id > 0) {
@@ -84,7 +86,7 @@ public class MedicionDAO {
         return medicion;
     }
     // FUNCION PARA SACAR TODAS LAS MEDICIONES DE LA BASE DE DATOS ( LA FUNCION DEVUELVE UN ARRAY DE TIPO MEDICION)
-    public ArrayList<Medicion> listar() {
+    public ArrayList<Medicion> listar(long id) {
         SQLiteDatabase db = dbsqLite.getReadableDatabase();
         listaMedicions = new ArrayList<>();
 
@@ -93,7 +95,8 @@ public class MedicionDAO {
                 Medicion.campo_distancia + "," +
                 Medicion.campo_fecha_Inicio + "," +
                 Medicion.campo_fecha_Fin + "," +
-                Medicion.campo_velocidad +
+                Medicion.campo_velocidad + "," +
+                Medicion.campo_id_user +
                 " FROM " + Medicion.tabla;
 
         Cursor cursor = db.rawQuery(selectQuery, null);
@@ -104,9 +107,11 @@ public class MedicionDAO {
                 nuMedicion = new Medicion();
                 nuMedicion.setId(cursor.getLong(0));
                 nuMedicion.setDistancia(cursor.getDouble(1));
-                nuMedicion.setFechaInicio(Date.valueOf(cursor.getString(2)));
                 nuMedicion.setFechafin(cursor.getDouble(3));
-                listaMedicions.add(nuMedicion);
+                nuMedicion.setVelocidad(cursor.getDouble(4));
+                nuMedicion.setId_User(cursor.getLong(5));
+                if (id==nuMedicion.getId_User())
+                    listaMedicions.add(nuMedicion);
             } while (cursor.moveToNext());
             db.close();
         }

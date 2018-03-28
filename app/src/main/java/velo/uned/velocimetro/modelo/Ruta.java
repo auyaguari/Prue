@@ -15,20 +15,22 @@ public class Ruta {
     private Long id;
     private Double latitud;
     private Double longitud;
-    private Long id_medicion;
+    private Medicion medicion;
 
 
 
     public Ruta() {
 
     }
-    public Long getId_medicion() {
-        return id_medicion;
+
+    public Medicion getMedicion() {
+        return medicion;
     }
 
-    public void setId_medicion(Long id_medicion) {
-        this.id_medicion = id_medicion;
+    public void setMedicion(Medicion medicion) {
+        this.medicion = medicion;
     }
+
     public Long getId() {
         return id;
     }

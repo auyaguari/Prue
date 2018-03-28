@@ -51,6 +51,28 @@ public class UsersDAO {
         }
         return id > 0;
     }
+    public boolean alterar(User user,String pass) throws SQLiteException{
+        int id;
+        SQLiteDatabase db = null;
+        try {
+            db = dbsqLite.getWritableDatabase();
+            ContentValues values = new ContentValues();
+            values.put(user.campo_nombre, user.getNombre());
+            values.put(user.campo_apellido, user.getApellido());
+            values.put(user.campo_rol, user.getRol());
+            values.put(user.campo_usuario, user.getUser());
+            values.put(user.campo_contraseña,pass);
+            values.put(user.campo_estado,user.getEstado());
+            String where = user.campo_id + " = ?";
+            id = db.update(user.tabla, values, where, new String[]{String.valueOf(user.getId())});
+        }catch (SQLiteException ex){
+            throw ex;
+
+        }finally{
+            db.close();
+        }
+        return id > 0;
+    }
     // FUNCION PARA MODIFICAR EL USER DE LA BASE DE DATOS
     public boolean alterarIntento(User user) {
         SQLiteDatabase db =dbsqLite.getWritableDatabase();
@@ -101,6 +123,7 @@ public class UsersDAO {
                 nuUser.setPass(cursor.getString(5));
                 nuUser.setIntento(cursor.getInt(6));
                 nuUser.setEstado(cursor.getString(7));
+                Log.v("pruebaData",String.valueOf(nuUser.getId()));
             }
         }catch (Exception e){
             Log.d(this.getClass().toString(), e.getMessage());

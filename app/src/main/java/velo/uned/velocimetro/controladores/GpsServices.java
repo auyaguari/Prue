@@ -79,14 +79,13 @@ public class GpsServices extends Service implements LocationListener, GpsStatus.
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     public void onLocationChanged(Location location) {
         data = ActividadPrincipal.getData();
-        rutalist=data.getRutalist();
+        //rutalist=data.getRutalist();
         if (data.isEnEjecucion()){
             currentLat = location.getLatitude();
             currentLon = location.getLongitude();
-            /*ruta.setLongitud(currentLon);
-            ruta.setLatitud(currentLat);
-            rutalist.add(ruta);
-            ruta=new Ruta();*/
+            //ruta.setLongitud(currentLon);
+            //ruta.setLatitud(currentLat);
+            //rutalist.add(ruta);
             if (data.isFirstTime()){
                 lastLat = currentLat;
                 lastLon = currentLon;

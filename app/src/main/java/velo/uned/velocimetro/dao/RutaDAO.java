@@ -9,6 +9,7 @@ import java.sql.Date;
 import java.util.ArrayList;
 
 import velo.uned.velocimetro.datos.Conexion;
+import velo.uned.velocimetro.modelo.Medicion;
 import velo.uned.velocimetro.modelo.Ruta;
 
 /**
@@ -24,7 +25,6 @@ public class RutaDAO {
     public RutaDAO(Context context) {
         this.context = context;
         dbsqLite = new Conexion(context);
-        listar();
     }
 
     // FUNCION PARA GUARDAR LA RUTA EN LA BASE DE DATOS
@@ -33,7 +33,7 @@ public class RutaDAO {
         ContentValues values = new ContentValues();
         values.put(ruta.campo_latitud, ruta.getLatitud());
         values.put(ruta.campo_longitud, ruta.getLongitud());
-        values.put(ruta.campo_id_medicion,ruta.getId_medicion());
+        values.put(ruta.campo_id_medicion,ruta.getMedicion().getId());
         Long id = db.insert(ruta.tabla, null, values);
         db.close();
         if (id > 0) {
@@ -42,15 +42,16 @@ public class RutaDAO {
         return id > 0;
     }
     // FUNCION PARA GUARDAR LA LISTA DE RUTAS EN LA BASE DE DATOS
-    public boolean insertar(ArrayList<Ruta> rutalist,Long id_med) {
+    public boolean insertar(ArrayList<Ruta> rutalist,Medicion medicion) {
         SQLiteDatabase db = dbsqLite.getWritableDatabase();
         ContentValues values;
         Long id = null;
         for (Ruta nuRuta : listaRutas){
+            nuRuta.setMedicion(medicion);
             values = new ContentValues();
             values.put(nuRuta.campo_latitud, nuRuta.getLatitud());
             values.put(nuRuta.campo_longitud, nuRuta.getLongitud());
-            values.put(nuRuta.campo_id_medicion,id_med);
+            values.put(nuRuta.campo_id_medicion,nuRuta.getMedicion().getId());
             id= db.insert(nuRuta.tabla, null, values);
             if (id > 0) {
             nuRuta.setId(id);
@@ -65,7 +66,7 @@ public class RutaDAO {
         ContentValues values = new ContentValues();
         values.put(ruta.campo_latitud, ruta.getLatitud());
         values.put(ruta.campo_longitud, ruta.getLongitud());
-        values.put(ruta.campo_id_medicion,ruta.getId_medicion());
+        values.put(ruta.campo_id_medicion,ruta.getMedicion().getId());
         String where = ruta.campo_id + " = ?";
 
         int id = db.update(ruta.tabla, values, where, new String[]{String.valueOf(ruta.getId())});
@@ -80,10 +81,11 @@ public class RutaDAO {
         db.close();
         return ret > 0;
     }
-    // FUNCION PARA OBTENER LA RUTA EN LA BASE DE DATOS ( DEVUELVE UN OBJETO RUTA)
+    // FUNCION PARA OBTENER LA RUTA EN LA BASE DE DATOS ( DEVUELVE UN OBJETO RUTA No se Utiliza)
     public Ruta getRuta(Long id){
         SQLiteDatabase db =dbsqLite.getReadableDatabase();
         Ruta ruta  =new Ruta();
+        Medicion medicion= new Medicion();
         String [] campos={Ruta.campo_longitud,Ruta.campo_longitud,Ruta.campo_id_medicion};
         String [] parametro={id.toString()};
         String where = Ruta.campo_id + " = ?";
@@ -93,14 +95,14 @@ public class RutaDAO {
         ruta.setId(id);
         ruta.setLatitud(cursor.getDouble(0));
         ruta.setLongitud(cursor.getDouble(1));
-        ruta.setId_medicion(cursor.getLong(2));
+        medicion.setId(cursor.getLong(2));
+        ruta.setMedicion(medicion);
         return ruta;
     }
     // FUNCION PARA OBTENER TODAS LAS RUTAS EN LA BASE DE DATOS( DEVUELVE UN ARRAY DE TIPO RUTA)
-    public ArrayList<Ruta> listar() {
+    public ArrayList<Ruta> listar(long id) {
         SQLiteDatabase db = dbsqLite.getReadableDatabase();
         listaRutas = new ArrayList<>();
-
         String selectQuery = "SELECT  " +
                 Ruta.campo_id + "," +
                 Ruta.campo_latitud + "," +
@@ -109,15 +111,18 @@ public class RutaDAO {
                 " FROM " + Ruta.tabla;
         Cursor cursor = db.rawQuery(selectQuery, null);
         Ruta nuRuta;
-
+        Medicion medicion;
         if (cursor.moveToFirst()) {
             do {
                 nuRuta = new Ruta();
+                medicion=new Medicion();
                 nuRuta.setId(cursor.getLong(0));
                 nuRuta.setLatitud(cursor.getDouble(1));
                 nuRuta.setLongitud(cursor.getDouble(2));
-                nuRuta.setId_medicion(cursor.getLong(3));
-                listaRutas.add(nuRuta);
+                medicion.setId(cursor.getLong(3));
+                nuRuta.setMedicion(medicion);
+                if (medicion.getId()==id)
+                    listaRutas.add(nuRuta);
             } while (cursor.moveToNext());
             db.close();
         }

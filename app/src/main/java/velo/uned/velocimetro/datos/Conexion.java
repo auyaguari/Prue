@@ -39,7 +39,8 @@ public class Conexion extends SQLiteOpenHelper {
                     + Medicion.campo_distancia + " DOUBLE, "
                     + Medicion.campo_fecha_Inicio + " DATE, "
                     + Medicion.campo_fecha_Fin + " DOUBLE, "
-                    + Medicion.campo_velocidad + " DOUBLE )";
+                    + Medicion.campo_velocidad + " DOUBLE, "
+                    + Medicion.campo_id_user + " INTEGER )";
             String crear_tabla_ruta = "CREATE TABLE " + Ruta.tabla  + "("
                     + Ruta.campo_id  + " INTEGER PRIMARY KEY AUTOINCREMENT ,"
                     + Ruta.campo_latitud + " DOUBLE, "

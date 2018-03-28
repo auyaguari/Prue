@@ -61,9 +61,10 @@ public class Login extends AppCompatActivity {
     }
 //FUNCION PARA VALIDAR LOS ATRIBUTOS CON LA CLASE VALIDACION Y INGRESO AL SISTEMA
     public void ingresar(View view){
+        Log.v("pruebaData5",String.valueOf(user.getId()));
         if(validar()){
             if (val.validarCaracteresEspeciales(user.getUser())){
-                if (val.validarPassword(user.getPass())){
+                if (val.validarCaracteresEspeciales(user.getPass())){
                     TripleDES des = new TripleDES();
                     String dess=null;
                     try {
@@ -76,8 +77,9 @@ public class Login extends AppCompatActivity {
                                 usersServicio.updateNuevo(user);
                                 Toast.makeText(this, "Bienvenido!", Toast.LENGTH_SHORT).show();
                                 Intent intentIng = new Intent(Login.this, ActividadPrincipal.class);
-                                intentIng.putExtra("actor",user.getUser());
+                                intentIng.putExtra("id",user.getId());
                                 Login.this.startActivity(intentIng);
+
                         } else {
                             usersServicio.updateIntento(user);
                             Toast.makeText(this, "Logeo Incorrecto!", Toast.LENGTH_SHORT).show();
@@ -91,13 +93,14 @@ public class Login extends AppCompatActivity {
                     Toast.makeText(this, "Password Incorrecto!", Toast.LENGTH_SHORT).show();
                     pass.requestFocus();
                     user.setPass(null);
-                    pass.setError(getString(R.string.errorpassword));
+                    pass.setError(getString(R.string.errorCaracter));
                 }
 
             }else{
                 Toast.makeText(this, "User Incorrecto!", Toast.LENGTH_SHORT).show();
                 us.requestFocus();
                 user.setUser(null);
+                pass.setError(getString(R.string.errorCaracter));
             }
         }
     }

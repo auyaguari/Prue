@@ -22,6 +22,7 @@ public class AdaptadorListUser extends BaseAdapter {
     public AdaptadorListUser(Context context) {
         layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         usersServicio = new UsersServicio(context);
+        usersServicio.listar();
     }
 
 // RETORNA EL TAMAÑO DE LA LISTA DE USUARIOS

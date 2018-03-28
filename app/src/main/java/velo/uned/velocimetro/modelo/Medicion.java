@@ -24,9 +24,11 @@ public class Medicion extends BaseObservable implements Parcelable {
     public static final String campo_fecha_Fin="fechaFin_med";
     public static final String campo_distancia="distancia_med";
     public static final String campo_velocidad="velocidad_med";
+    public static final String campo_id_user="id_user";
 
     private Long id;
     private ArrayList<Ruta> rutalist;
+    private long id_User;
     @Bindable
     private Date  fechaInicio;
     @Bindable
@@ -80,6 +82,14 @@ public class Medicion extends BaseObservable implements Parcelable {
 
     public void setRutalist(ArrayList<Ruta> rutalist) {
         this.rutalist = rutalist;
+    }
+
+    public long getId_User() {
+        return id_User;
+    }
+
+    public void setId_User(long id_User) {
+        this.id_User = id_User;
     }
 
     public void setId(Long id){this.id=id;}
