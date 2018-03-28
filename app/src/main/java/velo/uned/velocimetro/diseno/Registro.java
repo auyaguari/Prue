@@ -29,6 +29,7 @@ public class Registro extends AppCompatActivity {
     Validacion val;
     EditText nom,ap,us,pas;
     Button eliminar,actualizar,desbloquear;
+    //CREA LA ACTIVIDAD PRINCIPAL
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,7 +65,7 @@ public class Registro extends AppCompatActivity {
         }
         binding.setDbuser(users);
     }
-
+// FUNCION PARA VALIDAR LOS ATRIBUTOS CON AYUDA DE LA CLASE VALIDACION Y GUARDA UN USUARIO NUEVO O LO MODIFICA
     public void registrar(View view) throws Exception {
         String pass = null;
         if (validar()) {
@@ -109,7 +110,7 @@ public class Registro extends AppCompatActivity {
     }
 
 
-//valida que los campos esten llenos
+//FUNCION PARA VALIDAR QUE LOS CAMPOS ESTEN LLENOS
         public boolean validar(){
             boolean des = true;
             if (TextUtils.isEmpty(users.getNombre())) {

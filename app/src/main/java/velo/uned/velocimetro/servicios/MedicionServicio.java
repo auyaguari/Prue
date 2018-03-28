@@ -15,16 +15,17 @@ import velo.uned.velocimetro.modelo.Medicion;
 
 public class MedicionServicio {
     private MedicionDAO medicionDAO;
-
+    // CONSTRUCTOR DE MEDICIONSERVICIO
     public MedicionServicio(Context context) {
         medicionDAO = new MedicionDAO(context);
     }
-
+    // FUNCION PARA GUARDAR LA MEDICION EN LA BASE DE DATOS
     public boolean addMedicion(Medicion medicion) {
 
        return  medicionDAO.insertar(medicion);
 
     }
+    // FUNCION PARA ACTUALIZAR LA MEDICION EN LA BASE DE DATOS
     public boolean updateMedicion(Medicion medicion) {
 
         return medicionDAO.alterar(medicion);
@@ -35,10 +36,12 @@ public class MedicionServicio {
         return medicionDAO.borrar(medicion);
 
     }
+    // FUNCION PARA OBTENER LA MEDICION EN LA BASE DE DATOS
     public Medicion getMedicion(Medicion medicion) {
         Medicion nuMedicion = medicionDAO.getMedicion(medicion.getId());
         return nuMedicion;
     }
+    // FUNCION PARA OBTENER TODAS LAS MEDICIONES DE LA BASE DE DATOS
     public ArrayList<Medicion> getallMedicion() {
         ArrayList<Medicion> medicionList = medicionDAO.listar();
         return medicionList;

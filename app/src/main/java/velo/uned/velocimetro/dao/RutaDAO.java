@@ -20,12 +20,14 @@ public class RutaDAO {
     Conexion dbsqLite;
     public static ArrayList<Ruta> listaRutas;
 
+    // CONSTRUCTOR DE LA CLASE RUTADAO
     public RutaDAO(Context context) {
         this.context = context;
         dbsqLite = new Conexion(context);
         listar();
     }
 
+    // FUNCION PARA GUARDAR LA RUTA EN LA BASE DE DATOS
     public boolean insertar(Ruta ruta) {
         SQLiteDatabase db = dbsqLite.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -39,6 +41,7 @@ public class RutaDAO {
         }
         return id > 0;
     }
+    // FUNCION PARA GUARDAR LA LISTA DE RUTAS EN LA BASE DE DATOS
     public boolean insertar(ArrayList<Ruta> rutalist,Long id_med) {
         SQLiteDatabase db = dbsqLite.getWritableDatabase();
         ContentValues values;
@@ -56,7 +59,7 @@ public class RutaDAO {
         db.close();
         return id > 0;
     }
-
+    // FUNCION PARA MODIFICAR LA RUTA EN LA BASE DE DATOS
     public boolean alterar(Ruta ruta) {
         SQLiteDatabase db = dbsqLite.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -69,8 +72,7 @@ public class RutaDAO {
         db.close();
         return id > 0;
     }
-
-
+    // FUNCION PARA BORRAR LA RUTA EN LA BASE DE DATOS
     public boolean borrar(Ruta ruta ) {
         SQLiteDatabase db = dbsqLite.getWritableDatabase();
         String where = ruta.campo_id + " = ?";
@@ -78,6 +80,7 @@ public class RutaDAO {
         db.close();
         return ret > 0;
     }
+    // FUNCION PARA OBTENER LA RUTA EN LA BASE DE DATOS ( DEVUELVE UN OBJETO RUTA)
     public Ruta getRuta(Long id){
         SQLiteDatabase db =dbsqLite.getReadableDatabase();
         Ruta ruta  =new Ruta();
@@ -93,6 +96,7 @@ public class RutaDAO {
         ruta.setId_medicion(cursor.getLong(2));
         return ruta;
     }
+    // FUNCION PARA OBTENER TODAS LAS RUTAS EN LA BASE DE DATOS( DEVUELVE UN ARRAY DE TIPO RUTA)
     public ArrayList<Ruta> listar() {
         SQLiteDatabase db = dbsqLite.getReadableDatabase();
         listaRutas = new ArrayList<>();
@@ -120,6 +124,7 @@ public class RutaDAO {
         return listaRutas;
     }
 
+    // FUNCION PARA BUSCAR LA RUTA POR ID DE LA LISTA DE RUTAS
     public Ruta localizarRuta(long id) {
         for (Ruta nuRuta : listaRutas)
             if (nuRuta.getId() == id)

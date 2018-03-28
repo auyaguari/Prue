@@ -14,6 +14,7 @@ import velo.uned.velocimetro.util.AdaptadorListUser;
 public class ListaUser extends AppCompatActivity {
     AdaptadorListUser adaptadorListUser;
     ListView listView;
+    //CREA LA ACTIVIDAD
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,7 +34,7 @@ public class ListaUser extends AppCompatActivity {
             }
         });
     }
-
+    // ACTUALIZA EL ADAPTADOR DE LA LISTVIEW CUANDO LA ACTIVIDAD ESTA EN REPOSO O RESUMEN
     @Override
     public void onResume(){
         super.onResume();

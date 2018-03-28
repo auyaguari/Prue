@@ -20,13 +20,13 @@ public class MedicionDAO {
     Context context;
     Conexion dbsqLite;
     public static ArrayList<Medicion> listaMedicions;
-
+    //CONSTRUCTOR DE MEDICIONDAO
     public MedicionDAO(Context context) {
         this.context = context;
         dbsqLite = new Conexion(context);
         listar();
     }
-
+    //FUNCION PARA GUARDAR LA MEDICION EN LA BASE DE DATOS
     public boolean insertar(Medicion medicion) {
         SQLiteDatabase db = dbsqLite.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -40,7 +40,7 @@ public class MedicionDAO {
         }
         return id > 0;
     }
-
+    // FUNCION PARA MODIFICAR LA MEDICION EN LA BASE DE DATOS ( NO SE UTILIZA AUN)
     public boolean alterar(Medicion medicion) {
         SQLiteDatabase db = dbsqLite.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -54,7 +54,7 @@ public class MedicionDAO {
         return id > 0;
     }
 
-
+    // FUNCION PARA ELIMINAR LA MEDICION DE LA BASE DE DATOS ( NO SE UTILIZA AUN)
     public boolean borrar(Medicion medicion) {
         SQLiteDatabase db = dbsqLite.getWritableDatabase();
         String where = medicion.campo_id + " = ?";
@@ -62,6 +62,8 @@ public class MedicionDAO {
         db.close();
         return ret > 0;
     }
+
+    //FUNCION PARA SACAR LOS DATOS DE LA MEDICION DE LA BASE DE DATOS (LA FUNCION DEVUELVE UN OBJETO DE TIPO MEDICION)
     public Medicion getMedicion(Long id){
         SQLiteDatabase db =dbsqLite.getReadableDatabase();
 
@@ -81,8 +83,7 @@ public class MedicionDAO {
 
         return medicion;
     }
-
-
+    // FUNCION PARA SACAR TODAS LAS MEDICIONES DE LA BASE DE DATOS ( LA FUNCION DEVUELVE UN ARRAY DE TIPO MEDICION)
     public ArrayList<Medicion> listar() {
         SQLiteDatabase db = dbsqLite.getReadableDatabase();
         listaMedicions = new ArrayList<>();
@@ -112,7 +113,7 @@ public class MedicionDAO {
         return listaMedicions;
     }
 
-    //Lista todas las mediciones y retorna un objeto de tipo Cursor
+    //OTRA FORMA DE SACAR TODAS LAS MEDICIONES DE LA BASE DE DATOS ( NO SE UTILIZA)
     public Cursor listarCursor() {
         SQLiteDatabase db = dbsqLite.getReadableDatabase();
         listaMedicions = new ArrayList<>();
@@ -129,7 +130,7 @@ public class MedicionDAO {
 
         return cursor;
     }
-
+    // FUNCION PARA BUSCAR UN OBJETO MEDICION DE LA LISTA DE MEDICIONES ( NO SE UTILIZA )
     public Medicion localizarMedicion(long id) {
         for (Medicion nuMedicion : listaMedicions)
             if (nuMedicion.getId() == id)

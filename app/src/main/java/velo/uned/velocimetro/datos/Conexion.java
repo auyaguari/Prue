@@ -27,7 +27,7 @@ public class Conexion extends SQLiteOpenHelper {
         super(context, Nombre_Base, null, version);
 
     }
-
+    // CREA LA BASE DE DATOS Y EL USUARIO ADMIN
     @Override
     public void onCreate(SQLiteDatabase db) throws SQLiteException {
 
@@ -73,7 +73,7 @@ public class Conexion extends SQLiteOpenHelper {
             Log.d(this.getClass().toString(), ex.getMessage());
         }
         }
-
+    // VERIFICA QUE NO EXISTA LAS BASES DE DATOS Y SI ES ASI LLAMA A LA FUNCION ONCREATE
     @Override
     public void onUpgrade(SQLiteDatabase db, int i, int i1) {
         db.execSQL("DROP TABLE IF EXISTS medicion");

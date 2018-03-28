@@ -23,13 +23,13 @@ public class UsersDAO {
     Context context;
     Conexion dbsqLite;
     TripleDES des;
-
+    // CONSTRUCTOR DE LA CLASE USERDAO
     public UsersDAO(Context context) {
         this.context = context;
         dbsqLite = new Conexion(context);
         des=new TripleDES();
     }
-
+    // FUNCION PARA GUARDAR EL USER DE LA BASE DE DATOS
     public boolean insertar(User user,String pass) throws SQLiteException{
         Long id = null;
         SQLiteDatabase db = null;
@@ -51,6 +51,7 @@ public class UsersDAO {
         }
         return id > 0;
     }
+    // FUNCION PARA MODIFICAR EL USER DE LA BASE DE DATOS
     public boolean alterarIntento(User user) {
         SQLiteDatabase db =dbsqLite.getWritableDatabase();
         Integer cont=user.getIntento();
@@ -64,6 +65,7 @@ public class UsersDAO {
             db.close();
         return id > 0;
     }
+    // FUNCION PARA BORRAR EL USER DE LA BASE DE DATOS
     public boolean borrar(User user ) throws SQLiteException{
         SQLiteDatabase db = null;
         int ret = 0;
@@ -79,6 +81,8 @@ public class UsersDAO {
     }
         return ret > 0;
     }
+
+    // FUNCION PARA OBTENER EL USER DE LA BASE DE DATOS BUSCANDO POR USUARIO ( LA FUNCION DEVUELVE UN OBJETO DE TIPO USER)
     public User getUser(User user){
         SQLiteDatabase db =dbsqLite.getReadableDatabase();
         User nuUser=new User();
@@ -103,6 +107,8 @@ public class UsersDAO {
         }
             return nuUser;
     }
+
+    // FUNCION PARA MODIFICAR LA MEDICION EN LA BASE DE DATOS BUSCANDO POR ID
     public User getUserID(User user){
         SQLiteDatabase db =dbsqLite.getReadableDatabase();
         User nuUser=new User();
@@ -127,6 +133,7 @@ public class UsersDAO {
         }
         return nuUser;
     }
+    // FUNCION PARA OBTENER TODOS LOS USERS DE LA BASE DE DATOS ( DEVUELVE UN ARRAY DE TIPO USER)
     public ArrayList<User> listar() {
         SQLiteDatabase db = dbsqLite.getReadableDatabase();
         ArrayList<User> listuser = new ArrayList<>();

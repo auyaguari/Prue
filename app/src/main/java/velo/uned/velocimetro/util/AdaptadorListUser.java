@@ -18,29 +18,29 @@ import velo.uned.velocimetro.servicios.UsersServicio;
 public class AdaptadorListUser extends BaseAdapter {
     LayoutInflater layoutInflater;
     UsersServicio usersServicio;
-
+    // CONSTRUCTOR
     public AdaptadorListUser(Context context) {
         layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         usersServicio = new UsersServicio(context);
     }
 
-
+// RETORNA EL TAMAÑO DE LA LISTA DE USUARIOS
     @Override
     public int getCount() {
         return usersServicio.listUser.size();
     }
-
+// RETORNA EL ITEM DE LA LISTA USER SEGUN LA POSICION
     @Override
     public Object getItem(int position) {
         return usersServicio.listUser.get(position);
     }
-
+// RETORNA EL ID DEL ITEM DE LA LISTA USER SEGUN LA POSICION
     @Override
     public long getItemId(int position) {
         User nuUser = usersServicio.listUser.get(position);
         return nuUser.getId();
     }
-
+// FUNCIONA PARA AGREGAR LOS ITEMS A LA LIST VIEW
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {

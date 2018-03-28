@@ -29,8 +29,6 @@ public class User extends BaseObservable  {
     private String apellido;
     private Integer intento;
     private String estado;
-    //admin = Administrador
-    //user = Usuario
     private String rol;
 
     public User() {

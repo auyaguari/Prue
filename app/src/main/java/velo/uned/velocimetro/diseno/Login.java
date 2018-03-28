@@ -26,6 +26,7 @@ public class Login extends AppCompatActivity {
     Validacion val;
     EditText us,pass;
     UsersServicio usersServicio;
+    //CREA LA ACTIVIDAD
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,7 +59,7 @@ public class Login extends AppCompatActivity {
         //    }
         //});
     }
-//Ingresar Al sistema y validacion de datos
+//FUNCION PARA VALIDAR LOS ATRIBUTOS CON LA CLASE VALIDACION Y INGRESO AL SISTEMA
     public void ingresar(View view){
         if(validar()){
             if (val.validarCaracteresEspeciales(user.getUser())){
@@ -100,7 +101,7 @@ public class Login extends AppCompatActivity {
             }
         }
     }
-    //valida que los campos esten llenos
+    //FUNCION PARA VALIDAR QUE LOS ATRIBUTOS ESTEN LLENOS
     public boolean validar(){
         boolean des=true;
         if (TextUtils.isEmpty(user.getUser())){
