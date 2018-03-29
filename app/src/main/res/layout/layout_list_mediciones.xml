@@ -15,4 +15,9 @@
         android:layout_height="wrap_content"
         android:id="@+id/tvfechaInicio"
         android:text="fechaInicio"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvvelocidad"
+        android:text="Velocidad"/>
 </LinearLayout>

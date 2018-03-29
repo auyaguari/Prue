@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.database.sqlite.SQLiteException;
 import android.databinding.DataBindingUtil;
 import android.location.GpsSatellite;
 import android.location.GpsStatus;
@@ -308,13 +309,19 @@ public class ActividadPrincipal extends  AppCompatActivity  implements LocationL
     }
     //Detener una medición
     public void detenerMedicion(View view){
-        if (medicionServicio.addMedicion(data)) {
-            //if(rutaServicios.addAllRuta(data.getRutalist(),data)) {
-                Toast.makeText(this, "Guardado Correctamente!", Toast.LENGTH_SHORT).show();
-           // }
-        } else {
+        try {
+            if (medicionServicio.addMedicion(data)) {
+                if(rutaServicios.addAllRuta(data.getRutalist(),data)) {
+                    Toast.makeText(this, "Guardado Correctamente!", Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                Toast.makeText(this, "Ocurrio Un error al guardar!", Toast.LENGTH_SHORT).show();
+            }
+        }catch (Exception e){
+            Log.d(this.getClass().toString(), e.getMessage());
             Toast.makeText(this, "Ocurrio Un error al guardar!", Toast.LENGTH_SHORT).show();
         }
+
         data.setVelocidadMaxima(0);
         data.setDistancia(0);
         data.setVelocidad(0);

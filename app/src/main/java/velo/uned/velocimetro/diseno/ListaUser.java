@@ -28,7 +28,7 @@ public class ListaUser extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(context,Registro.class);
                 intent.putExtra("operacion", "alterar");
-                intent.putExtra("posicion", position);
+                intent.putExtra("actor", 1);
                 intent.putExtra("id", id);
                 startActivity(intent);
             }

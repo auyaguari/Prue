@@ -121,6 +121,7 @@
     <string name="dialog_save_button_text">Save</string>
     <string name="usuario">Usuario</string>
     <string name="contra">Contraseña</string>
+    <string name="repcontra">Repita la Contraseña</string>
     <string name="iniciar">Iniciar</string>
     <string name="guardar">Guardar</string>
     <string name="eliminar">Eliminar</string>

@@ -27,7 +27,7 @@ public class Registro extends AppCompatActivity {
     UsersServicio usersServicio;
     TripleDES des;
     Validacion val;
-    EditText nom,ap,us,pas;
+    EditText nom,ap,us,pas,passrep;
     Button eliminar,actualizar,desbloquear;
     //CREA LA ACTIVIDAD PRINCIPAL
     @Override
@@ -38,8 +38,9 @@ public class Registro extends AppCompatActivity {
         ap=findViewById(R.id.txtapellido);
         us=findViewById(R.id.txtUsuarioReg);
         pas=findViewById(R.id.txtPassReg);
+        passrep=findViewById(R.id.txtPassRegRep);
         operacion = getIntent().getStringExtra("operacion");
-        posicion = getIntent().getIntExtra("posicion", 0);
+        posicion = getIntent().getIntExtra("actor", 0);
         id = getIntent().getLongExtra("id",0);
         eliminar=findViewById(R.id.btnEliminar);
         actualizar=findViewById(R.id.btnRegistarReg);
@@ -49,8 +50,10 @@ public class Registro extends AppCompatActivity {
         val=new Validacion();
         usersServicio=new UsersServicio(this );
         if (operacion.equals("alterar")){
-            eliminar.setVisibility(View.VISIBLE);
-            desbloquear.setVisibility(View.VISIBLE);
+            if (posicion==1){
+                eliminar.setVisibility(View.VISIBLE);
+                desbloquear.setVisibility(View.VISIBLE);
+            }
             users.setId(id);
             users=usersServicio.getUser(users);
             try {
@@ -74,27 +77,28 @@ public class Registro extends AppCompatActivity {
                 if (val.validarCaracteresEspeciales(users.getApellido()) & val.validarLongitud(users.getApellido())) {
                     if (val.validarCaracteresEspeciales(users.getUser())) {
                         if (val.validarPassword(users.getPass())) {
-                            try {
-                                pass = des.encrypt(users.getPass());
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                            if (operacion.equals("alterar")){
-                                if (usersServicio.update(users, pass)) {
-                                    Toast.makeText(this, "Guardado Correctamente!", Toast.LENGTH_SHORT).show();
-                                    finish();
-                                } else {
-                                    Toast.makeText(this, "Ocurrio Un error al guardar!", Toast.LENGTH_SHORT).show();
+                            if (validarContra()){
+                                try {
+                                    pass = des.encrypt(users.getPass());
+                                } catch (Exception e) {
+                                    e.printStackTrace();
                                 }
-                            }else{
-                                if (usersServicio.addUser(users, pass)) {
-                                    Toast.makeText(this, "Guardado Correctamente!", Toast.LENGTH_SHORT).show();
-                                    finish();
-                                } else {
-                                    Toast.makeText(this, "Ocurrio Un error al guardar!", Toast.LENGTH_SHORT).show();
+                                if (operacion.equals("alterar")|operacion.equals("alterarAdmin")){
+                                    if (usersServicio.update(users, pass)) {
+                                        Toast.makeText(this, "Guardado Correctamente!", Toast.LENGTH_SHORT).show();
+                                        finish();
+                                    } else {
+                                        Toast.makeText(this, "Ocurrio Un error al guardar!", Toast.LENGTH_SHORT).show();
+                                    }
+                                }else{
+                                    if (usersServicio.addUser(users, pass)) {
+                                        Toast.makeText(this, "Guardado Correctamente!", Toast.LENGTH_SHORT).show();
+                                        finish();
+                                    } else {
+                                        Toast.makeText(this, "Ocurrio Un error al guardar!", Toast.LENGTH_SHORT).show();
+                                    }
                                 }
                             }
-
                         } else {
                             pas.setError(getString(R.string.errorpassword));
                             pas.requestFocus();
@@ -144,10 +148,32 @@ public class Registro extends AppCompatActivity {
             }
             return des;
         }
+        //Funcion para validar que la la contraseña sea correcta
+    public boolean validarContra(){
+        boolean des = false;
+        if (users.getPass().equals(passrep.getText().toString())) {
+            des = true;
+        }else{
+            passrep.setText(null);
+            passrep.setError("La contraseña no Coincide");
+            passrep.requestFocus();
+        }
+        return des;
+    }
 //quitar el bloqueo del usuario
     public void liberar(View view) {
+        if (usersServicio.updateNuevo(users)){
+            Toast.makeText(this, "Liberado Correctamente!", Toast.LENGTH_SHORT).show();
+            finish();
+        }else
+            Toast.makeText(this, "Error al liberar!", Toast.LENGTH_SHORT).show();
     }
 
     public void eliminar(View view) {
+        if (usersServicio.deleteUser(users)){
+            Toast.makeText(this, "Borrado Correctamente!", Toast.LENGTH_SHORT).show();
+            finish();
+        }else
+            Toast.makeText(this, "error al borrar", Toast.LENGTH_SHORT).show();
     }
 }

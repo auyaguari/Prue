@@ -43,16 +43,15 @@ public class UsersDAO {
             values.put(user.campo_contraseña,pass);
             values.put(user.campo_estado,"Activa");
             id = db.insert(User.tabla, null, values);
-        }catch (SQLiteException ex){
-            throw ex;
-
+        }catch (Exception e){
+            Log.d(this.getClass().toString(), e.getMessage());
         }finally{
             db.close();
         }
         return id > 0;
     }
     public boolean alterar(User user,String pass) throws SQLiteException{
-        int id;
+        int id=0;
         SQLiteDatabase db = null;
         try {
             db = dbsqLite.getWritableDatabase();
@@ -65,8 +64,8 @@ public class UsersDAO {
             values.put(user.campo_estado,user.getEstado());
             String where = user.campo_id + " = ?";
             id = db.update(user.tabla, values, where, new String[]{String.valueOf(user.getId())});
-        }catch (SQLiteException ex){
-            throw ex;
+        }catch (Exception e){
+            Log.d(this.getClass().toString(), e.getMessage());
 
         }finally{
             db.close();
@@ -76,15 +75,24 @@ public class UsersDAO {
     // FUNCION PARA MODIFICAR EL USER DE LA BASE DE DATOS
     public boolean alterarIntento(User user) {
         SQLiteDatabase db =dbsqLite.getWritableDatabase();
-        Integer cont=user.getIntento();
+        int id=0;
+        try {
+            Integer cont=user.getIntento();
             ContentValues values = new ContentValues();
             if (cont==3){
                 values.put(user.campo_estado,"Bloqueada");
+            }else{
+                if (cont==0)
+                    values.put(user.campo_estado,"Activa");
             }
             values.put(user.campo_intentos, cont);
             String where = user.campo_id + " = ?";
-            int id = db.update(user.tabla, values, where, new String[]{String.valueOf(user.getId())});
+            id = db.update(user.tabla, values, where, new String[]{String.valueOf(user.getId())});
             db.close();
+        }catch (Exception e){
+            Log.d(this.getClass().toString(), e.getMessage());
+        }
+
         return id > 0;
     }
     // FUNCION PARA BORRAR EL USER DE LA BASE DE DATOS
@@ -92,15 +100,15 @@ public class UsersDAO {
         SQLiteDatabase db = null;
         int ret = 0;
         try {
-        db = dbsqLite.getWritableDatabase();
-        String where = user.campo_id + " = ?";
-        ret = db.delete(user.tabla, where, new String[]{String.valueOf(user.getId())});
-    }catch (SQLiteException ex) {
-        throw ex;
-    }finally {
-        db.close();
+            db = dbsqLite.getWritableDatabase();
+            String where = user.campo_id + " = ?";
+            ret = db.delete(user.tabla, where, new String[]{String.valueOf(user.getId())});
+        }catch (SQLiteException ex) {
+            throw ex;
+        }finally {
+            db.close();
 
-    }
+        }
         return ret > 0;
     }
 
@@ -128,7 +136,7 @@ public class UsersDAO {
         }catch (Exception e){
             Log.d(this.getClass().toString(), e.getMessage());
         }
-            return nuUser;
+        return nuUser;
     }
 
     // FUNCION PARA MODIFICAR LA MEDICION EN LA BASE DE DATOS BUSCANDO POR ID
@@ -160,34 +168,38 @@ public class UsersDAO {
     public ArrayList<User> listar() {
         SQLiteDatabase db = dbsqLite.getReadableDatabase();
         ArrayList<User> listuser = new ArrayList<>();
+        try {
+            String selectQuery = "SELECT  " +
+                    User.campo_id + "," +
+                    User.campo_nombre + "," +
+                    User.campo_apellido + "," +
+                    User.campo_rol + "," +
+                    User.campo_usuario + "," +
+                    User.campo_contraseña +
+                    " FROM " + User.tabla;
 
-        String selectQuery = "SELECT  " +
-                User.campo_id + "," +
-                User.campo_nombre + "," +
-                User.campo_apellido + "," +
-                User.campo_rol + "," +
-                User.campo_usuario + "," +
-                User.campo_contraseña +
-                " FROM " + User.tabla;
+            Cursor cursor = db.rawQuery(selectQuery, null);
+            User nuUser;
 
-        Cursor cursor = db.rawQuery(selectQuery, null);
-        User nuUser;
-
-        if (cursor.moveToFirst()) {
-            do {
-                nuUser = new User();
-                nuUser.setId(cursor.getLong(0));
-                nuUser.setNombre(cursor.getString(1));
-                nuUser.setApellido(cursor.getString(2));
-                nuUser.setRol(cursor.getString(3));
-                nuUser.setUser(cursor.getString(4));
-                nuUser.setPass(cursor.getString(5));
-                //Log.v("Funciona",nuUser.getId()+nuUser.getNombre()+nuUser.getApellido()+nuUser.getRol()+nuUser.getUser()+nuUser.getPass()
-                //+nuUser.getIntento()+nuUser.getEstado());
-                listuser.add(nuUser);
-            } while (cursor.moveToNext());
-            db.close();
+            if (cursor.moveToFirst()) {
+                do {
+                    nuUser = new User();
+                    nuUser.setId(cursor.getLong(0));
+                    nuUser.setNombre(cursor.getString(1));
+                    nuUser.setApellido(cursor.getString(2));
+                    nuUser.setRol(cursor.getString(3));
+                    nuUser.setUser(cursor.getString(4));
+                    nuUser.setPass(cursor.getString(5));
+                    //Log.v("Funciona",nuUser.getId()+nuUser.getNombre()+nuUser.getApellido()+nuUser.getRol()+nuUser.getUser()+nuUser.getPass()
+                    //+nuUser.getIntento()+nuUser.getEstado());
+                    listuser.add(nuUser);
+                } while (cursor.moveToNext());
+                db.close();
+            }
+        }catch (Exception e){
+            Log.d(this.getClass().toString(), e.getMessage());
         }
+
         return listuser;
     }
 }

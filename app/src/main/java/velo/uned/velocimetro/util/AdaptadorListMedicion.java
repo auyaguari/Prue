@@ -51,9 +51,11 @@ public class AdaptadorListMedicion extends BaseAdapter {
         }
 
         TextView tvdistancia = convertView.findViewById(R.id.tvdistancia);
+        TextView tvVelocidad = convertView.findViewById(R.id.tvvelocidad);
         Medicion nuMedicion = medicionServicio.listMedicion.get(position);
 
         tvdistancia.setText(String.valueOf(nuMedicion.getDistancia()));
+        tvVelocidad.setText(String.valueOf(nuMedicion.getVelocidadMaxima()));
         return convertView;
     }
 }
