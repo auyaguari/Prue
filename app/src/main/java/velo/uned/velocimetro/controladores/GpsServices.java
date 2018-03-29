@@ -18,6 +18,7 @@ import android.os.IBinder;
 import android.support.annotation.RequiresApi;
 import android.text.SpannableString;
 import android.text.style.RelativeSizeSpan;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -78,58 +79,63 @@ public class GpsServices extends Service implements LocationListener, GpsStatus.
     //Evento de cambio de ubicación
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     public void onLocationChanged(Location location) {
-        data = ActividadPrincipal.getData();
-        //rutalist=data.getRutalist();
-        if (data.isEnEjecucion()){
-            currentLat = location.getLatitude();
-            currentLon = location.getLongitude();
-            //ruta.setLongitud(currentLon);
-            //ruta.setLatitud(currentLat);
-            //rutalist.add(ruta);
-            if (data.isFirstTime()){
-                lastLat = currentLat;
-                lastLon = currentLon;
-                data.setFirstTime(false);
-            }
-
-            lastlocation.setLatitude(lastLat);
-            lastlocation.setLongitude(lastLon);
-            double distance = lastlocation.distanceTo(location);
-
-            if (location.getAccuracy() < distance){
-                data.addDistancia(distance);
-
-                lastLat = currentLat;
-                lastLon = currentLon;
-            }
-
-            if (location.hasSpeed()) {
-                //data.setVelocidadActual(location.getSpeed());
-                //Actualiza la velocidad
-                data.setVelocidad(location.getSpeed() * 3.6);
-                String speed = String.format(Locale.ENGLISH, "%.0f", location.getSpeed() * 3.6) + "km/h";
-                SpannableString s = new SpannableString(speed);
-                s.setSpan(new RelativeSizeSpan(0.25f), s.length()-4, s.length(), 0);
-
-                data.setVelocidadActualString(speed);
-                speed = String.format(Locale.ENGLISH, "%.0f", data.getVelocidadMaxima()) + "km/h";
-                s = new SpannableString(speed);
-                s.setSpan(new RelativeSizeSpan(0.25f), s.length()-4, s.length(), 0);
-                data.setVelocidadMaximaString(s.toString());
-                s = new SpannableString(String.format("%.2f", data.getDistancia()) + "m");
-                s.setSpan(new RelativeSizeSpan(0.5f), s.length() - 2, s.length(), 0);
-                //Actualiza la distancia
-
-                data.setDistanciaString(s.toString());
-                //data.setOtraVelocidad(otraVelocidad(location));
-                if(location.getSpeed() == 0){
-                    new isStillStopped().execute();
+        try {
+            data = ActividadPrincipal.getData();
+            rutalist=data.getRutalist();
+            if (data.isEnEjecucion()){
+                currentLat = location.getLatitude();
+                currentLon = location.getLongitude();
+                ruta.setLongitud(currentLon);
+                ruta.setLatitud(currentLat);
+                rutalist.add(ruta);
+                if (data.isFirstTime()){
+                    lastLat = currentLat;
+                    lastLon = currentLon;
+                    data.setFirstTime(false);
                 }
+
+                lastlocation.setLatitude(lastLat);
+                lastlocation.setLongitude(lastLon);
+                double distance = lastlocation.distanceTo(location);
+
+                if (location.getAccuracy() < distance){
+                    data.addDistancia(distance);
+
+                    lastLat = currentLat;
+                    lastLon = currentLon;
+                }
+
+                if (location.hasSpeed()) {
+                    //data.setVelocidadActual(location.getSpeed());
+                    //Actualiza la velocidad
+                    data.setVelocidad(location.getSpeed() * 3.6);
+                    String speed = String.format(Locale.ENGLISH, "%.0f", location.getSpeed() * 3.6) + "km/h";
+                    SpannableString s = new SpannableString(speed);
+                    s.setSpan(new RelativeSizeSpan(0.25f), s.length()-4, s.length(), 0);
+
+                    data.setVelocidadActualString(speed);
+                    speed = String.format(Locale.ENGLISH, "%.0f", data.getVelocidadMaxima()) + "km/h";
+                    s = new SpannableString(speed);
+                    s.setSpan(new RelativeSizeSpan(0.25f), s.length()-4, s.length(), 0);
+                    data.setVelocidadMaximaString(s.toString());
+                    s = new SpannableString(String.format("%.2f", data.getDistancia()) + "m");
+                    s.setSpan(new RelativeSizeSpan(0.5f), s.length() - 2, s.length(), 0);
+                    //Actualiza la distancia
+
+                    data.setDistanciaString(s.toString());
+                    //data.setOtraVelocidad(otraVelocidad(location));
+                    if(location.getSpeed() == 0){
+                        new isStillStopped().execute();
+                    }
+                }
+                //data.update();
+                data.setRutalist(rutalist);
+                updateNotification(true);
             }
-            //data.update();
-            //data.setRutalist(rutalist);
-            updateNotification(true);
+        }catch (Exception e){
+            Log.d(this.getClass().toString(), e.getMessage());
         }
+
     }
 
     //Otra forma de calcular la velocidad - No se utiliza

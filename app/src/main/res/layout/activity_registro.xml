@@ -48,8 +48,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/contra"
-        android:inputType="text"
+        android:inputType="textPassword"
         android:text="@={dbuser.pass}"/>
+    <EditText
+        android:id="@+id/txtPassRegRep"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/repcontra"
+        android:inputType="textPassword"/>
     <Button
         android:id="@+id/btnRegistarReg"
         android:layout_width="wrap_content"

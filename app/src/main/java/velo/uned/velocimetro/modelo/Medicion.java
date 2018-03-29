@@ -102,12 +102,9 @@ public Long getId(){return this.id;}
     public Medicion(){
         this.enEjecucion=false;
         this.listoParaEjecutarse=false;
-
-
-
         rangos=new ArrayList<RangoVelocidad>();
         RangoVelocidad rango = new RangoVelocidad(1,0,0.99, "PARADO");
-
+        rutalist=new ArrayList<>();
     rangos.add(rango);
     this.rangoActual=rangos.get(0);
     }
