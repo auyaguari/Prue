@@ -14,7 +14,7 @@ import velo.uned.velocimetro.util.TripleDES;
 
 
 /**
- * Created by alexa on 13/03/2018.
+ * Created by Alvaro on 13/03/2018.
  */
 
 public class Conexion extends SQLiteOpenHelper {

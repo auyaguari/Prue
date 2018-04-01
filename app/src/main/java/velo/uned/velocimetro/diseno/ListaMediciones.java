@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import velo.uned.velocimetro.R;
 import velo.uned.velocimetro.util.AdaptadorListMedicion;
@@ -23,7 +24,13 @@ public class ListaMediciones extends AppCompatActivity {
         final Context context = this;
         id=getIntent().getLongExtra("id",0);
         listView = findViewById(R.id.listvmedicion);
-        adaptadorListMedicion = new AdaptadorListMedicion(this,id);
+        try{
+            adaptadorListMedicion = new AdaptadorListMedicion(this,id);
+        }catch (Exception e){
+            Toast.makeText(this, "Error en la base de datos!", Toast.LENGTH_SHORT).show();
+        }
+
+
         listView.setAdapter(adaptadorListMedicion);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

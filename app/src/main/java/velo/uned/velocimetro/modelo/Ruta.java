@@ -1,7 +1,7 @@
 package velo.uned.velocimetro.modelo;
 
 /**
- * Created by alexa on 19/03/2018.
+ * Created by Alvaro on 19/03/2018.
  */
 
 public class Ruta {

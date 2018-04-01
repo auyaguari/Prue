@@ -255,17 +255,17 @@ public class ActividadPrincipal extends  AppCompatActivity  implements LocationL
             RangoVelocidad rango = new RangoVelocidad(1,0,valorFin, "PARADO");
             valorIni = (double)sharedPreferences.getInt("estado_parado", 0);
             valorFin = (double)sharedPreferences.getInt("estado_caminando", 0);
-            //RangoVelocidad rango1 = new RangoVelocidad(2,1,3.99, "CAMINANDO");
-            RangoVelocidad rango1 = new RangoVelocidad(2,valorIni,valorFin-0.000001, "CAMINANDO");
+            RangoVelocidad rango1 = new RangoVelocidad(2,1,3.99, "CAMINANDO");
+            //RangoVelocidad rango1 = new RangoVelocidad(2,valorIni,valorFin-0.000001, "CAMINANDO");
             valorIni = (double)sharedPreferences.getInt("estado_caminando", 0);
             valorFin = (double)sharedPreferences.getInt("estado_marchando", 0);
-            //RangoVelocidad rango2 = new RangoVelocidad(3,4,5.99, "MARCHANDO");
-            RangoVelocidad rango2 = new RangoVelocidad(3,valorIni,valorFin-0.000001, "MARCHANDO");
+            RangoVelocidad rango2 = new RangoVelocidad(3,4,5.99, "MARCHANDO");
+            //RangoVelocidad rango2 = new RangoVelocidad(3,valorIni,valorFin-0.000001, "MARCHANDO");
             valorIni = (double)sharedPreferences.getInt("estado_marchando", 0);
             valorFin = (double)sharedPreferences.getInt("estado_corriendo", 0);
-            //RangoVelocidad rango3 = new RangoVelocidad(4,6,11.99, "CORRIENDO");
+            RangoVelocidad rango3 = new RangoVelocidad(4,6,11.99, "CORRIENDO");
 
-            RangoVelocidad rango3 = new RangoVelocidad(4,valorIni,valorFin-0.000001, "CORRIENDO");
+            //RangoVelocidad rango3 = new RangoVelocidad(4,valorIni,valorFin-0.000001, "CORRIENDO");
 
             valorIni = (double)sharedPreferences.getInt("estado_corriendo", 0);
             valorFin = (double)sharedPreferences.getInt("estado_sprint", 0);
@@ -273,12 +273,12 @@ public class ActividadPrincipal extends  AppCompatActivity  implements LocationL
             RangoVelocidad rango4 = new RangoVelocidad(5,valorIni,valorFin-0.000001, "SPRINT");
             valorIni = (double)sharedPreferences.getInt("estado_sprint", 0);
             valorFin = (double)sharedPreferences.getInt("estado_motor_terrestre", 0);
-            //RangoVelocidad rango5 = new RangoVelocidad(5,25,169.99, "ESTADO VEH. MOTOR TERRESTRE");
-            RangoVelocidad rango5 = new RangoVelocidad(5,valorIni,valorFin-0.000001, "ESTADO VEH. MOTOR TERRESTRE");
+            RangoVelocidad rango5 = new RangoVelocidad(5,25,169.99, "ESTADO VEH. MOTOR TERRESTRE");
+            //RangoVelocidad rango5 = new RangoVelocidad(5,valorIni,valorFin-0.000001, "ESTADO VEH. MOTOR TERRESTRE");
             valorIni = (double)sharedPreferences.getInt("estado_aereo", 0);
             valorFin = 700;
-            //RangoVelocidad rango6 = new RangoVelocidad(5,1i0,700, "ESTADO VEH. MOTOR AÉREO");
-            RangoVelocidad rango6 = new RangoVelocidad(5,valorIni,valorFin, "ESTADO VEH. MOTOR AÉREO");
+            RangoVelocidad rango6 = new RangoVelocidad(6,170,700, "ESTADO VEH. MOTOR AÉREO");
+            //RangoVelocidad rango6 = new RangoVelocidad(5,valorIni,valorFin, "ESTADO VEH. MOTOR AÉREO");
 
             //fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_action_pause));
             rangos.add(rango);

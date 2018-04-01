@@ -4,17 +4,20 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.util.Log;
 import android.widget.Toast;
 
 import java.sql.Date;
+import java.sql.SQLDataException;
 import java.util.ArrayList;
+import java.util.List;
 
 import velo.uned.velocimetro.datos.Conexion;
 import velo.uned.velocimetro.modelo.Medicion;
 
 /**
- * Created by alexa on 15/03/2018.
+ * Created by Alvaro on 15/03/2018.
  */
 
 public class MedicionDAO {
@@ -112,7 +115,7 @@ public class MedicionDAO {
         return medicion;
     }
     // FUNCION PARA SACAR TODAS LAS MEDICIONES DE LA BASE DE DATOS ( LA FUNCION DEVUELVE UN ARRAY DE TIPO MEDICION)
-    public ArrayList<Medicion> listar(long id) {
+    public ArrayList<Medicion> listar(long id)  throws SQLiteException{
         SQLiteDatabase db = dbsqLite.getReadableDatabase();
         listaMedicions = new ArrayList<>();
         try {
@@ -143,6 +146,7 @@ public class MedicionDAO {
             }
         }catch (Exception e){
             Log.d(this.getClass().toString(), e.getMessage());
+            throw new SQLiteException("Error al Obtener las Mediciones" + e.getMessage());
 
         }
 

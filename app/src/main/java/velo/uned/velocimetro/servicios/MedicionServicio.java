@@ -12,7 +12,7 @@ import velo.uned.velocimetro.dao.MedicionDAO;
 import velo.uned.velocimetro.modelo.Medicion;
 
 /**
- * Created by alexa on 19/03/2018.
+ * Created by Alvaro on 19/03/2018.
  */
 
 public class MedicionServicio {
@@ -66,7 +66,7 @@ public class MedicionServicio {
 
     }
     // FUNCION PARA OBTENER TODAS LAS MEDICIONES DE LA BASE DE DATOS
-    public void getallMedicion(long id) {
+    public void getallMedicion(long id) throws SQLiteException {
         try {
 
             listMedicion = medicionDAO.listar(id);

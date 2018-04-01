@@ -16,7 +16,7 @@ import velo.uned.velocimetro.util.TripleDES;
 //import velo.uned.velocimetro.modelo.Users;
 
 /**
- * Created by alexa on 20/03/2018.
+ * Created by Alvaro on 20/03/2018.
  */
 
 public class UsersDAO {

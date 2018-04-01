@@ -14,7 +14,7 @@ import velo.uned.velocimetro.modelo.Medicion;
 import velo.uned.velocimetro.modelo.Ruta;
 
 /**
- * Created by alexa on 19/03/2018.
+ * Created by Alvaro on 19/03/2018.
  */
 
 public class RutaDAO {

@@ -12,7 +12,7 @@ import velo.uned.velocimetro.util.TripleDES;
 
 
 /**
- * Created by alexa on 20/03/2018.
+ * Created by Alvaro on 20/03/2018.
  */
 
 public class UsersServicio   {

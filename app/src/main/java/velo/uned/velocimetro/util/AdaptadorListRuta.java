@@ -14,7 +14,7 @@ import velo.uned.velocimetro.servicios.RutaServicios;
 import velo.uned.velocimetro.servicios.UsersServicio;
 
 /**
- * Created by alexa on 28/03/2018.
+ * Created by Alvaro on 28/03/2018.
  */
 
 public class AdaptadorListRuta extends BaseAdapter {

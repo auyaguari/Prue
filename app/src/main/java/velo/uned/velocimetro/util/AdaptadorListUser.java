@@ -12,7 +12,7 @@ import velo.uned.velocimetro.modelo.User;
 import velo.uned.velocimetro.servicios.UsersServicio;
 
 /**
- * Created by alexa on 27/03/2018.
+ * Created by Alvaro on 27/03/2018.
  */
 
 public class AdaptadorListUser extends BaseAdapter {

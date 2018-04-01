@@ -1,11 +1,14 @@
 package velo.uned.velocimetro.util;
 
 import android.content.Context;
+import android.database.sqlite.SQLiteException;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import velo.uned.velocimetro.R;
 import velo.uned.velocimetro.modelo.Medicion;
@@ -14,17 +17,21 @@ import velo.uned.velocimetro.servicios.MedicionServicio;
 import velo.uned.velocimetro.servicios.UsersServicio;
 
 /**
- * Created by alexa on 28/03/2018.
+ * Created by Alvaro on 28/03/2018.
  */
 
 public class AdaptadorListMedicion extends BaseAdapter {
     LayoutInflater layoutInflater;
     MedicionServicio medicionServicio;
     // CONSTRUCTOR
-    public AdaptadorListMedicion(Context context,long id) {
+    public AdaptadorListMedicion(Context context,long id) throws SQLiteException {
         layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         medicionServicio = new MedicionServicio(context);
-        medicionServicio.getallMedicion(id);
+
+            medicionServicio.getallMedicion(id);
+
+
+
     }
 
     // RETORNA EL TAMAÑO DE LA LISTA DE Mediciones

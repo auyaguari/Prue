@@ -22,6 +22,8 @@ import velo.uned.velocimetro.util.TripleDES;
 import velo.uned.velocimetro.util.Validacion;
 
 public class Login extends AppCompatActivity {
+    private final static String APP_NAME = "APP_NAME";
+    private final static int REQUEST_READ_SMS_PERMISSION = 3004;
     User user;
     Validacion val;
     EditText us,pass;
@@ -37,6 +39,25 @@ public class Login extends AppCompatActivity {
             ActivityCompat.requestPermissions(this,
                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                     200);
+        }
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_SMS) ==
+                PackageManager.PERMISSION_GRANTED){
+            // Show an explanation to the user *asynchronously* -- don't block
+            // this thread waiting for the user's response! After the user
+            // sees the explanation, try again to request the permission.
+
+        } else {
+
+            // No explanation needed, we can request the permission.
+
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.READ_SMS},
+                    REQUEST_READ_SMS_PERMISSION);
+
+            // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+            // app-defined int constant. The callback method gets the
+            // result of the request.
         }
         //ActivityActividadPrincipalBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_actividad_principal);
         //med = new Medicion();

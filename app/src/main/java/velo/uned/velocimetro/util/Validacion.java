@@ -1,7 +1,7 @@
 package velo.uned.velocimetro.util;
 
 /**
- * Created by alexa on 27/03/2018.
+ * Created by Alvaro on 27/03/2018.
  */
 
 public class Validacion {
